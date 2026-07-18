@@ -14,8 +14,7 @@ jobs:
           python-version: "3.12"
       - name: Install fabri
         run: |
-          # Switch to `pip install fabri` once fabri 0.15 is published to PyPI.
-          pip install "git+https://github.com/Rushour0/fabri.git@main"
+          pip install "fabri>=0.15"
       - name: Check generated catalog
         run: |
           python3 scripts/build_index.py
