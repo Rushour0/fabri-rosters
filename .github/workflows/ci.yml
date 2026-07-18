@@ -1,0 +1,50 @@
+name: Catalog CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install fabri
+        run: |
+          # Switch to `pip install fabri` once fabri 0.15 is published to PyPI.
+          pip install "git+https://github.com/Rushour0/fabri.git@main"
+      - name: Check generated catalog
+        run: |
+          python3 scripts/build_index.py
+          git diff --exit-code index.json
+          python3 scripts/validate.py
+      - name: Install and dry-run every agency
+        shell: bash
+        run: |
+          set -euo pipefail
+          for agency_dir in agencies/*/; do
+            name="${agency_dir%/}"
+            name="${name##*/}"
+            dest="/tmp/ci-${name}"
+            fabri new agency "ci-${name}" --from "./${agency_dir%/}" --dest "$dest"
+            if grep -R -E '__AGENCY_ROOT__|__AGENCY_SLUG__|__RUN_FROM__' "$dest"; then
+              echo "Unresolved agency placeholder found for ${name}."
+              exit 1
+            fi
+            fabri --config "$dest/ci-${name}/agent.openai.yaml" run --dry-run "ci"
+          done
+      - name: Compile and dry-run the company
+        shell: bash
+        run: |
+          set -euo pipefail
+          fabri company compile companies/acme-eng/company.toml --dest /tmp/ci-company
+          # The generated ROOT orchestrator is <root_id>.yaml directly in the
+          # company dir (leaf agencies live under agencies/ and also carry a
+          # max_cost_usd, so exclude them).
+          root="$(find /tmp/ci-company -maxdepth 2 -name '*.yaml' -not -path '*/agencies/*' \
+            -exec grep -l 'max_cost_usd' {} + | head -1)"
+          test -n "$root"
+          fabri --config "$root" run --dry-run "ci"

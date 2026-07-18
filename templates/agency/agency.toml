@@ -1,0 +1,19 @@
+[agency]
+name = "copy-me-agency"
+title = "Copy-Me Agency"
+tagline = "A minimal starting point for an installable fabri agency."
+category = "Engineering & Product"
+deliverable = "A concise result produced by a manager and specialist."
+entry = "agent.openai.yaml"
+
+[agency.stats]
+agents = 2
+tools = 3
+
+[agency.cogs]
+max_cost_usd = 0.25
+provider = "openai"
+
+[agency.wedge]
+self_improving = true
+cogs_reported = true

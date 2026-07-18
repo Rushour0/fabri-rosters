@@ -1,0 +1,25 @@
+agent:
+  name: __AGENCY_SLUG__
+  max_steps: 6
+  max_cost_usd: 0.25
+  system_prompt: |
+    You manage a small specialist crew. Delegate the task, inspect the result, and return a concise answer with the real run cost.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 1024
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [specialist]
+  sandbox_root: __AGENCY_ROOT__/workspace
+  result_format: toon
+  agents:
+    - name: specialist
+      description: Produces the focused result for the task.
+      config: __AGENCY_ROOT__/specialist.openai.yaml
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___parent
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3
