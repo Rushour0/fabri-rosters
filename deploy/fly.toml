@@ -1,0 +1,18 @@
+# Fly.io config for the public Fabri Studio demo.
+#   cd deploy && fly launch --copy-config --now && fly secrets set OPENAI_API_KEY=sk-proj-...
+app = "fabri-studio-demo"
+primary_region = "iad"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"     # scale to zero when idle — cheap
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"

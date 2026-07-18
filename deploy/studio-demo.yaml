@@ -1,0 +1,28 @@
+# Locked-down agency for the public Studio demo. Cheap model + a hard per-run
+# cost ceiling; the real spend guarantee is a usage limit on the OpenAI key
+# (see deploy/README.md). It asks ONE clarifying question when the request is
+# vague — so a non-technical visitor sees fabri's human-in-the-loop first-hand.
+agent:
+  name: fabri-helper
+  max_steps: 6
+  max_cost_usd: 0.03          # hard per-run ceiling — fabri ends the run if crossed
+  system_prompt: |
+    You are a friendly planning assistant in a public demo. A visitor gives you
+    a request (a trip, an event, a project, a decision). If one key detail is
+    missing, call the ask_user tool EXACTLY once to ask for it (offer a few
+    options when natural). Then return a short, concrete, helpful plan — a few
+    bullet points, no fluff. Keep it brief. Do not call any other tool.
+llm:
+  provider: openai
+  model: gpt-4o-mini
+  max_tokens: 600
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [ask_user]
+  result_format: toon
+memory:
+  backend: sqlite
+  collection: studio_demo
+  sqlite_path: .fabri/studio_demo.db
+  top_k: 2
