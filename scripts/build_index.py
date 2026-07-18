@@ -36,6 +36,28 @@ def flatten_roster(data: dict[str, object], path: str) -> dict[str, object]:
     return item
 
 
+def flatten_company(data: dict[str, object], path: str) -> dict[str, object]:
+    company = data["company"]
+    if not isinstance(company, dict):
+        raise ValueError(f"{path}: [company] must be a table")
+    # Nodes are top-level `[[node]]` arrays — the same schema `fabri company
+    # compile` reads (each node has an `id`, `report_to`, and either an `agency`
+    # source for a leaf crew or a `prompt` for a generated orchestrator).
+    nodes = data.get("node", [])
+    if not isinstance(nodes, list):
+        raise ValueError(f"{path}: [[node]] must be an array")
+    item = {key: value for key, value in company.items() if key != "nodes"}
+    member_agencies = [
+        Path(str(node["agency"])).name
+        for node in nodes
+        if isinstance(node, dict) and "agency" in node
+    ]
+    item["node_count"] = len(nodes)
+    item["member_agencies"] = member_agencies
+    item["path"] = path
+    return item
+
+
 def main() -> None:
     agencies = [
         flatten_agency(read_toml(path), path.parent.relative_to(REPO_ROOT).as_posix())
@@ -45,13 +67,21 @@ def main() -> None:
         flatten_roster(read_toml(path), path.parent.relative_to(REPO_ROOT).as_posix())
         for path in (REPO_ROOT / "rosters").glob("*/roster.toml")
     ]
+    companies = [
+        flatten_company(read_toml(path), path.parent.relative_to(REPO_ROOT).as_posix())
+        for path in (REPO_ROOT / "companies").glob("*/company.toml")
+    ]
     agencies.sort(key=lambda item: str(item["name"]))
     rosters.sort(key=lambda item: str(item["name"]))
+    companies.sort(key=lambda item: str(item["name"]))
     (REPO_ROOT / "index.json").write_text(
-        json.dumps({"agencies": agencies, "rosters": rosters}, indent=2) + "\n",
+        json.dumps({"agencies": agencies, "rosters": rosters, "companies": companies}, indent=2) + "\n",
         encoding="utf-8",
     )
-    print(f"Built index.json with {len(agencies)} agencies and {len(rosters)} rosters.")
+    print(
+        f"Built index.json with {len(agencies)} agencies, {len(rosters)} rosters, "
+        f"and {len(companies)} companies."
+    )
 
 
 if __name__ == "__main__":

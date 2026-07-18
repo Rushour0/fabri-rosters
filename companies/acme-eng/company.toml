@@ -1,0 +1,48 @@
+[company]
+name = "acme-eng"
+title = "Acme Inc"
+positioning = "A self-improving engineering org that reports its own COGS on every run."
+max_cost_usd = 8.00
+memory_namespace = "acme_eng"
+
+[[node]]
+id = "ceo"
+report_to = ""
+title = "Chief of Staff"
+prompt = "You are the Chief of Staff for Acme Inc. Delegate work to VP Engineering and VP Growth, synthesize their reports, and return one concise executive summary with total run cost."
+
+[[node]]
+id = "vp_eng"
+report_to = "ceo"
+title = "VP Engineering"
+prompt = "You are VP Engineering. Delegate bug triage and code review to your teams, inspect their results, and report back the engineering status and real run cost."
+
+[[node]]
+id = "vp_growth"
+report_to = "ceo"
+title = "VP Growth"
+prompt = "You are VP Growth. Delegate release-note writing and market research to your teams, inspect their results, and report back the growth status and real run cost."
+
+[[node]]
+id = "bugs"
+report_to = "vp_eng"
+title = "Bug Triage Crew"
+agency = "../../agencies/bug-triage-crew"
+
+[[node]]
+id = "reviews"
+report_to = "vp_eng"
+title = "Code Review Crew"
+agency = "../../agencies/code-review-crew"
+
+[[node]]
+id = "notes"
+report_to = "vp_growth"
+title = "Release Notes Writer"
+agency = "../../agencies/release-notes-writer"
+
+[[node]]
+id = "research"
+report_to = "vp_growth"
+title = "Market Research Brief"
+agency = "../../agencies/market-research-brief"

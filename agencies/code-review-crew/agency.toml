@@ -1,0 +1,16 @@
+[agency]
+name = "code-review-crew"
+title = "Code Review Crew"
+tagline = "Reviews a module for defects, fixes the issue, and explains the change."
+category = "Engineering & Product"
+deliverable = "A reviewed, fixed module with the issue explained."
+entry = "agent.openai.yaml"
+[agency.stats]
+agents = 3
+tools = 4
+[agency.cogs]
+max_cost_usd = 0.55
+provider = "openai"
+[agency.wedge]
+self_improving = true
+cogs_reported = true

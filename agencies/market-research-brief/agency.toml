@@ -1,0 +1,16 @@
+[agency]
+name = "market-research-brief"
+title = "Market Research Brief"
+tagline = "Researches a market question and writes a decision-ready brief."
+category = "Research"
+deliverable = "deliverables/brief.md"
+entry = "agent.openai.yaml"
+[agency.stats]
+agents = 3
+tools = 4
+[agency.cogs]
+max_cost_usd = 0.65
+provider = "openai"
+[agency.wedge]
+self_improving = true
+cogs_reported = true

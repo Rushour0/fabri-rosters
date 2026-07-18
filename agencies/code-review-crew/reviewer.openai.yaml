@@ -1,0 +1,21 @@
+agent:
+  name: reviewer
+  max_steps: 5
+  max_cost_usd: 0.18
+  system_prompt: |
+    Read the workspace module carefully. Identify the subtle defect, explain why it is wrong, and state the minimal correct fix. Do not edit files yourself.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 768
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [read_file, grep, list_dir]
+  sandbox_root: __AGENCY_ROOT__/workspace
+  result_format: toon
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___reviewer
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

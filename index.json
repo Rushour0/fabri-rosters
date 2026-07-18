@@ -16,6 +16,36 @@
       "path": "agencies/bug-triage-crew"
     },
     {
+      "name": "code-review-crew",
+      "title": "Code Review Crew",
+      "tagline": "Reviews a module for defects, fixes the issue, and explains the change.",
+      "category": "Engineering & Product",
+      "deliverable": "A reviewed, fixed module with the issue explained.",
+      "entry": "agent.openai.yaml",
+      "agents": 3,
+      "tools": 4,
+      "max_cost_usd": 0.55,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/code-review-crew"
+    },
+    {
+      "name": "market-research-brief",
+      "title": "Market Research Brief",
+      "tagline": "Researches a market question and writes a decision-ready brief.",
+      "category": "Research",
+      "deliverable": "deliverables/brief.md",
+      "entry": "agent.openai.yaml",
+      "agents": 3,
+      "tools": 4,
+      "max_cost_usd": 0.65,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/market-research-brief"
+    },
+    {
       "name": "release-notes-writer",
       "title": "Release Notes Writer",
       "tagline": "Turns a raw commit stream into clear, customer-ready release notes.",
@@ -58,6 +88,23 @@
         "support-macro-writer"
       ],
       "path": "rosters/fabri-roster"
+    }
+  ],
+  "companies": [
+    {
+      "name": "acme-eng",
+      "title": "Acme Inc",
+      "positioning": "A self-improving engineering org that reports its own COGS on every run.",
+      "max_cost_usd": 8.0,
+      "memory_namespace": "acme_eng",
+      "node_count": 7,
+      "member_agencies": [
+        "bug-triage-crew",
+        "code-review-crew",
+        "release-notes-writer",
+        "market-research-brief"
+      ],
+      "path": "companies/acme-eng"
     }
   ]
 }

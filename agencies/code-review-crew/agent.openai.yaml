@@ -1,0 +1,28 @@
+agent:
+  name: code-review-crew
+  max_steps: 10
+  max_cost_usd: 0.55
+  system_prompt: |
+    You manage a code review crew. Delegate defect review and repair, inspect their results, and return a concise final answer explaining the issue found, the fix applied, and the real run cost.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 1024
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [reviewer, fixer]
+  sandbox_root: __AGENCY_ROOT__/workspace
+  result_format: toon
+  agents:
+    - name: reviewer
+      description: Reads the module and identifies the subtle defect with a proposed fix.
+      config: __AGENCY_ROOT__/reviewer.openai.yaml
+    - name: fixer
+      description: Applies the targeted fix and explains the change made.
+      config: __AGENCY_ROOT__/fixer.openai.yaml
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___parent
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

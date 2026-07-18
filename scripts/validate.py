@@ -33,6 +33,47 @@ def validate_agency(path: Path) -> None:
         raise ValueError(f"{path}: entry file does not exist: {entry}")
 
 
+def validate_company(path: Path) -> None:
+    data = read_toml(path)
+    company = data.get("company")
+    if not isinstance(company, dict):
+        raise ValueError(f"{path}: missing [company] table")
+    missing = [key for key in ("name", "title") if not company.get(key)]
+    if missing:
+        raise ValueError(f"{path}: missing required company fields: {', '.join(missing)}")
+    # Top-level `[[node]]` arrays with `id` — the schema `fabri company compile`
+    # reads (kept in lockstep with src/fabri/company.py).
+    nodes = data.get("node")
+    if not isinstance(nodes, list) or not nodes:
+        raise ValueError(f"{path}: [[node]] must be a non-empty array")
+
+    names = set()
+    for node in nodes:
+        if not isinstance(node, dict) or not node.get("id"):
+            raise ValueError(f"{path}: every node requires an id")
+        names.add(node["id"])
+
+    roots = [node for node in nodes if isinstance(node, dict) and node.get("report_to", None) == ""]
+    if len(roots) != 1:
+        raise ValueError(f"{path}: expected exactly one root node with report_to=\"\", found {len(roots)}")
+
+    for node in nodes:
+        report_to = node.get("report_to")
+        if report_to is None:
+            raise ValueError(f"{path}: node {node.get('id')!r} is missing report_to")
+        if report_to != "" and report_to not in names:
+            raise ValueError(f"{path}: node {node['id']!r} reports to unknown node {report_to!r}")
+        agency = node.get("agency")
+        if agency is not None:
+            # Agency paths are relative to the company.toml's directory once
+            # installed by the fabri compiler; in this catalog repo the
+            # referenced agencies live under the top-level agencies/
+            # directory, so check dangling references there.
+            agency_name = agency.rsplit("/", 1)[-1] if isinstance(agency, str) else ""
+            if not agency_name or not (REPO_ROOT / "agencies" / agency_name).is_dir():
+                raise ValueError(f"{path}: node {node['id']!r} has dangling agency member {agency!r}")
+
+
 def validate_index() -> tuple[int, int]:
     index_path = REPO_ROOT / "index.json"
     if not index_path.is_file():
@@ -59,11 +100,17 @@ def main() -> None:
         paths = sorted((REPO_ROOT / "agencies").glob("*/agency.toml"))
         for path in paths:
             validate_agency(path)
+        company_paths = sorted((REPO_ROOT / "companies").glob("*/company.toml"))
+        for path in company_paths:
+            validate_company(path)
         agency_count, roster_count = validate_index()
     except (OSError, ValueError, json.JSONDecodeError, tomllib.TOMLDecodeError) as error:
         print(f"Validation failed: {error}", file=sys.stderr)
         raise SystemExit(1) from error
-    print(f"Validation passed: {len(paths)} agency manifests; index has {agency_count} agencies and {roster_count} rosters.")
+    print(
+        f"Validation passed: {len(paths)} agency manifests, {len(company_paths)} company manifests; "
+        f"index has {agency_count} agencies and {roster_count} rosters."
+    )
 
 
 if __name__ == "__main__":
