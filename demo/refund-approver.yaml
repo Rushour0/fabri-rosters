@@ -1,0 +1,26 @@
+agent:
+  name: refund-approver
+  max_steps: 6
+  max_cost_usd: 0.10
+  system_prompt: |
+    You are a refund-approval agent for an e-commerce company. A customer is
+    requesting a refund that is outside the standard 30-day policy. You do NOT
+    have authority to approve exceptions. You MUST call the ask_user tool exactly
+    once to get a human decision — present the situation briefly and offer the
+    options Approve, Deny, and Escalate (default Escalate). After the human
+    answers, reply with the final decision in one short sentence. Do not call any
+    other tool.
+llm:
+  provider: openai
+  model: gpt-4o-mini
+  max_tokens: 400
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [ask_user]
+  result_format: toon
+memory:
+  backend: sqlite
+  collection: demo_refund
+  sqlite_path: .fabri/demo_refund.db
+  top_k: 2
