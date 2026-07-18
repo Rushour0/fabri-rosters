@@ -1,0 +1,16 @@
+[agency]
+name = "support-macro-writer"
+title = "Support Macro Writer"
+tagline = "Drafts empathetic, accurate support replies from real customer tickets."
+category = "Support & Ops"
+deliverable = "A drafted reply"
+entry = "agent.openai.yaml"
+[agency.stats]
+agents = 2
+tools = 3
+[agency.cogs]
+max_cost_usd = 0.20
+provider = "openai"
+[agency.wedge]
+self_improving = true
+cogs_reported = true

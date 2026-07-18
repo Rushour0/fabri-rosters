@@ -1,0 +1,25 @@
+agent:
+  name: support-macro-writer
+  max_steps: 10
+  max_cost_usd: 0.20
+  system_prompt: |
+    You manage support reply drafting. Delegate the ticket analysis and reply, inspect it for clarity and accuracy, and return a concise final answer with the drafted reply and real run cost.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 1024
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [drafter]
+  sandbox_root: __AGENCY_ROOT__/workspace
+  result_format: toon
+  agents:
+    - name: drafter
+      description: Reads the ticket and drafts an empathetic, actionable reply.
+      config: __AGENCY_ROOT__/drafter.openai.yaml
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___parent
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

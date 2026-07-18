@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "fabri agency metadata",
+  "type": "object",
+  "required": ["agency"],
+  "properties": {
+    "agency": {
+      "type": "object",
+      "required": ["name", "title", "tagline", "category", "deliverable", "entry", "stats", "cogs", "wedge"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1},
+        "tagline": {"type": "string", "minLength": 1},
+        "category": {"enum": ["Engineering & Product", "Growth & Marketing", "Support & Ops", "Research"]},
+        "deliverable": {"type": "string", "minLength": 1},
+        "entry": {"type": "string", "minLength": 1},
+        "stats": {"type": "object", "required": ["agents", "tools"], "properties": {"agents": {"type": "integer", "minimum": 1}, "tools": {"type": "integer", "minimum": 0}}},
+        "cogs": {"type": "object", "required": ["max_cost_usd", "provider"], "properties": {"max_cost_usd": {"type": "number", "exclusiveMinimum": 0}, "provider": {"type": "string", "minLength": 1}}},
+        "wedge": {"type": "object", "required": ["self_improving", "cogs_reported"], "properties": {"self_improving": {"type": "boolean"}, "cogs_reported": {"type": "boolean"}}}
+      }
+    }
+  }
+}

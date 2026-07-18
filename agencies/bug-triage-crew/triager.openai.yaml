@@ -1,0 +1,21 @@
+agent:
+  name: triager
+  max_steps: 5
+  max_cost_usd: 0.12
+  system_prompt: |
+    Inspect the workspace and failing tests. Identify the root cause, state the minimal safe change, and preserve useful lessons in your trace.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 768
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [read_file, grep, list_dir]
+  sandbox_root: __AGENCY_ROOT__/workspace
+  result_format: toon
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___triager
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

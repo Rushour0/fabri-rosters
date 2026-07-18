@@ -1,0 +1,5 @@
+[
+  {"hash": "a1b2c3d", "message": "feat: add CSV export to roster search"},
+  {"hash": "d4e5f6a", "message": "fix: retain selected filters after pagination"},
+  {"hash": "b7c8d9e", "message": "chore: update internal lint configuration"}
+]

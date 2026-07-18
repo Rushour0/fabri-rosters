@@ -1,0 +1,63 @@
+{
+  "agencies": [
+    {
+      "name": "bug-triage-crew",
+      "title": "Bug Triage Crew",
+      "tagline": "Finds, fixes, and re-tests failing code until the suite is green.",
+      "category": "Engineering & Product",
+      "deliverable": "A passing test suite on the target module",
+      "entry": "agent.openai.yaml",
+      "agents": 4,
+      "tools": 4,
+      "max_cost_usd": 0.5,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/bug-triage-crew"
+    },
+    {
+      "name": "release-notes-writer",
+      "title": "Release Notes Writer",
+      "tagline": "Turns a raw commit stream into clear, customer-ready release notes.",
+      "category": "Growth & Marketing",
+      "deliverable": "deliverables/release_notes.md",
+      "entry": "agent.openai.yaml",
+      "agents": 3,
+      "tools": 4,
+      "max_cost_usd": 0.35,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/release-notes-writer"
+    },
+    {
+      "name": "support-macro-writer",
+      "title": "Support Macro Writer",
+      "tagline": "Drafts empathetic, accurate support replies from real customer tickets.",
+      "category": "Support & Ops",
+      "deliverable": "A drafted reply",
+      "entry": "agent.openai.yaml",
+      "agents": 2,
+      "tools": 3,
+      "max_cost_usd": 0.2,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/support-macro-writer"
+    }
+  ],
+  "rosters": [
+    {
+      "name": "fabri-roster",
+      "title": "The fabri Roster",
+      "tagline": "Small, self-improving agencies you can hire in one command.",
+      "positioning": "Self-improving agencies with explicit per-run COGS ceilings, packaged for embedding in your own product workflow.",
+      "members": [
+        "bug-triage-crew",
+        "release-notes-writer",
+        "support-macro-writer"
+      ],
+      "path": "rosters/fabri-roster"
+    }
+  ]
+}

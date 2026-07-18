@@ -1,0 +1,6 @@
+[roster]
+name = "fabri-roster"
+title = "The fabri Roster"
+tagline = "Small, self-improving agencies you can hire in one command."
+positioning = "Self-improving agencies with explicit per-run COGS ceilings, packaged for embedding in your own product workflow."
+members = ["bug-triage-crew", "release-notes-writer", "support-macro-writer"]

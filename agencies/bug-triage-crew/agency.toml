@@ -1,0 +1,16 @@
+[agency]
+name = "bug-triage-crew"
+title = "Bug Triage Crew"
+tagline = "Finds, fixes, and re-tests failing code until the suite is green."
+category = "Engineering & Product"
+deliverable = "A passing test suite on the target module"
+entry = "agent.openai.yaml"
+[agency.stats]
+agents = 4
+tools = 4
+[agency.cogs]
+max_cost_usd = 0.50
+provider = "openai"
+[agency.wedge]
+self_improving = true
+cogs_reported = true

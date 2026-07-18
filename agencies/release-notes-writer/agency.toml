@@ -1,0 +1,16 @@
+[agency]
+name = "release-notes-writer"
+title = "Release Notes Writer"
+tagline = "Turns a raw commit stream into clear, customer-ready release notes."
+category = "Growth & Marketing"
+deliverable = "deliverables/release_notes.md"
+entry = "agent.openai.yaml"
+[agency.stats]
+agents = 3
+tools = 4
+[agency.cogs]
+max_cost_usd = 0.35
+provider = "openai"
+[agency.wedge]
+self_improving = true
+cogs_reported = true
