@@ -1,0 +1,16 @@
+[agency]
+name = "seo-brief-crew"
+title = "SEO Brief Crew"
+tagline = "Shapes search-informed topics into focused content briefs."
+category = "Growth & Marketing"
+deliverable = "An SEO content brief (outline, keywords, angle)."
+entry = "agent.openai.yaml"
+[agency.stats]
+agents = 3
+tools = 4
+[agency.cogs]
+max_cost_usd = 0.55
+provider = "openai"
+[agency.wedge]
+self_improving = true
+cogs_reported = true

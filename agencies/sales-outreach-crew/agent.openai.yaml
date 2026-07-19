@@ -1,0 +1,28 @@
+agent:
+  name: sales-outreach-crew
+  max_steps: 8
+  max_cost_usd: 0.55
+  system_prompt: |
+    You manage personalized sales outreach. Delegate lead research and sequence writing, ensure every claim is grounded in the supplied profile, and return a concise three-touch sequence with real run cost.
+llm:
+  provider: openai
+  model: gpt-4o-mini
+  max_tokens: 1024
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [researcher, writer]
+  sandbox_root: __AGENCY_ROOT__/workspace
+  result_format: toon
+  agents:
+    - name: researcher
+      description: Extracts relevant, evidence-backed personalization cues from the lead profile.
+      config: __AGENCY_ROOT__/researcher.openai.yaml
+    - name: writer
+      description: Writes a concise, respectful three-touch sequence from the lead research.
+      config: __AGENCY_ROOT__/writer.openai.yaml
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___parent
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

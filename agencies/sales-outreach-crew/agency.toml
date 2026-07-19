@@ -1,0 +1,16 @@
+[agency]
+name = "sales-outreach-crew"
+title = "Sales Outreach Crew"
+tagline = "Researches a lead and drafts thoughtful, personalized outreach."
+category = "Growth & Marketing"
+deliverable = "A personalized 3-touch outreach sequence."
+entry = "agent.openai.yaml"
+[agency.stats]
+agents = 3
+tools = 4
+[agency.cogs]
+max_cost_usd = 0.55
+provider = "openai"
+[agency.wedge]
+self_improving = true
+cogs_reported = true

@@ -1,6 +1,21 @@
 {
   "agencies": [
     {
+      "name": "api-design-crew",
+      "title": "API Design Crew",
+      "tagline": "Turns feature requirements into reviewed, practical REST API contracts.",
+      "category": "Engineering & Product",
+      "deliverable": "A reviewed REST API contract (endpoints + schemas).",
+      "entry": "agent.openai.yaml",
+      "agents": 3,
+      "tools": 4,
+      "max_cost_usd": 0.5,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/api-design-crew"
+    },
+    {
       "name": "bug-triage-crew",
       "title": "Bug Triage Crew",
       "tagline": "Finds, fixes, and re-tests failing code until the suite is green.",
@@ -31,6 +46,36 @@
       "path": "agencies/code-review-crew"
     },
     {
+      "name": "data-analysis-crew",
+      "title": "Data Analysis Crew",
+      "tagline": "Examines small datasets and communicates evidence-based findings.",
+      "category": "Research",
+      "deliverable": "A findings brief from the dataset.",
+      "entry": "agent.openai.yaml",
+      "agents": 3,
+      "tools": 5,
+      "max_cost_usd": 0.6,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/data-analysis-crew"
+    },
+    {
+      "name": "incident-postmortem-crew",
+      "title": "Incident Postmortem Crew",
+      "tagline": "Investigates incident timelines and writes blameless improvement plans.",
+      "category": "Support & Ops",
+      "deliverable": "A blameless postmortem with root cause + action items.",
+      "entry": "agent.openai.yaml",
+      "agents": 3,
+      "tools": 4,
+      "max_cost_usd": 0.6,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/incident-postmortem-crew"
+    },
+    {
       "name": "market-research-brief",
       "title": "Market Research Brief",
       "tagline": "Researches a market question and writes a decision-ready brief.",
@@ -46,6 +91,21 @@
       "path": "agencies/market-research-brief"
     },
     {
+      "name": "qa-automation-crew",
+      "title": "QA Automation Crew",
+      "tagline": "Builds and runs focused automated tests for a target module.",
+      "category": "Engineering & Product",
+      "deliverable": "A generated + run test suite for the module.",
+      "entry": "agent.openai.yaml",
+      "agents": 3,
+      "tools": 5,
+      "max_cost_usd": 0.55,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/qa-automation-crew"
+    },
+    {
       "name": "release-notes-writer",
       "title": "Release Notes Writer",
       "tagline": "Turns a raw commit stream into clear, customer-ready release notes.",
@@ -59,6 +119,36 @@
       "self_improving": true,
       "cogs_reported": true,
       "path": "agencies/release-notes-writer"
+    },
+    {
+      "name": "sales-outreach-crew",
+      "title": "Sales Outreach Crew",
+      "tagline": "Researches a lead and drafts thoughtful, personalized outreach.",
+      "category": "Growth & Marketing",
+      "deliverable": "A personalized 3-touch outreach sequence.",
+      "entry": "agent.openai.yaml",
+      "agents": 3,
+      "tools": 4,
+      "max_cost_usd": 0.55,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/sales-outreach-crew"
+    },
+    {
+      "name": "seo-brief-crew",
+      "title": "SEO Brief Crew",
+      "tagline": "Shapes search-informed topics into focused content briefs.",
+      "category": "Growth & Marketing",
+      "deliverable": "An SEO content brief (outline, keywords, angle).",
+      "entry": "agent.openai.yaml",
+      "agents": 3,
+      "tools": 4,
+      "max_cost_usd": 0.55,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/seo-brief-crew"
     },
     {
       "name": "support-macro-writer",
@@ -105,6 +195,191 @@
         "market-research-brief"
       ],
       "path": "companies/acme-eng"
+    },
+    {
+      "name": "content-house",
+      "title": "Content House",
+      "positioning": "A content org that briefs, writes, and supports \u2014 self-improving each run.",
+      "max_cost_usd": 5.0,
+      "memory_namespace": "content_house",
+      "node_count": 4,
+      "member_agencies": [
+        "seo-brief-crew",
+        "release-notes-writer",
+        "support-macro-writer"
+      ],
+      "path": "companies/content-house"
+    },
+    {
+      "name": "data-works",
+      "title": "Data Works",
+      "positioning": "A data org that analyzes and researches to answer one question per run.",
+      "max_cost_usd": 5.0,
+      "memory_namespace": "data_works",
+      "node_count": 3,
+      "member_agencies": [
+        "data-analysis-crew",
+        "market-research-brief"
+      ],
+      "path": "companies/data-works"
+    },
+    {
+      "name": "devtools-co",
+      "title": "DevTools Co",
+      "positioning": "A developer-tools company: design the API, automate QA, ship the notes.",
+      "max_cost_usd": 7.0,
+      "memory_namespace": "devtools_co",
+      "node_count": 6,
+      "member_agencies": [
+        "api-design-crew",
+        "qa-automation-crew",
+        "release-notes-writer"
+      ],
+      "path": "companies/devtools-co"
+    },
+    {
+      "name": "fullstack-foundry",
+      "title": "Fullstack Foundry",
+      "positioning": "A self-improving engineering studio that ships and reports its cost per run.",
+      "max_cost_usd": 8.0,
+      "memory_namespace": "fullstack_foundry",
+      "node_count": 6,
+      "member_agencies": [
+        "api-design-crew",
+        "code-review-crew",
+        "bug-triage-crew",
+        "qa-automation-crew"
+      ],
+      "path": "companies/fullstack-foundry"
+    },
+    {
+      "name": "growth-engine",
+      "title": "Growth Engine",
+      "positioning": "A growth org that turns intent into content, outreach, and research \u2014 at a known cost.",
+      "max_cost_usd": 8.0,
+      "memory_namespace": "growth_engine",
+      "node_count": 6,
+      "member_agencies": [
+        "seo-brief-crew",
+        "sales-outreach-crew",
+        "market-research-brief",
+        "release-notes-writer"
+      ],
+      "path": "companies/growth-engine"
+    },
+    {
+      "name": "launch-team",
+      "title": "Launch Team",
+      "positioning": "A cross-functional launch org: ship the code, tell the story.",
+      "max_cost_usd": 8.0,
+      "memory_namespace": "launch_team",
+      "node_count": 8,
+      "member_agencies": [
+        "bug-triage-crew",
+        "code-review-crew",
+        "release-notes-writer",
+        "seo-brief-crew",
+        "sales-outreach-crew"
+      ],
+      "path": "companies/launch-team"
+    },
+    {
+      "name": "market-intel",
+      "title": "Market Intel",
+      "positioning": "A market-intelligence org: research, analyze, and act on outreach.",
+      "max_cost_usd": 6.0,
+      "memory_namespace": "market_intel",
+      "node_count": 4,
+      "member_agencies": [
+        "market-research-brief",
+        "data-analysis-crew",
+        "sales-outreach-crew"
+      ],
+      "path": "companies/market-intel"
+    },
+    {
+      "name": "product-studio",
+      "title": "Product Studio",
+      "positioning": "Product + engineering under one roof, from research to shipped code.",
+      "max_cost_usd": 8.0,
+      "memory_namespace": "product_studio",
+      "node_count": 7,
+      "member_agencies": [
+        "market-research-brief",
+        "api-design-crew",
+        "code-review-crew",
+        "qa-automation-crew"
+      ],
+      "path": "companies/product-studio"
+    },
+    {
+      "name": "quality-guild",
+      "title": "Quality Guild",
+      "positioning": "A quality org that reviews, tests, and triages until it's green.",
+      "max_cost_usd": 6.0,
+      "memory_namespace": "quality_guild",
+      "node_count": 4,
+      "member_agencies": [
+        "code-review-crew",
+        "qa-automation-crew",
+        "bug-triage-crew"
+      ],
+      "path": "companies/quality-guild"
+    },
+    {
+      "name": "reliability-labs",
+      "title": "Reliability Labs",
+      "positioning": "An on-call org that triages, fixes, and learns from every incident.",
+      "max_cost_usd": 6.0,
+      "memory_namespace": "reliability_labs",
+      "node_count": 4,
+      "member_agencies": [
+        "incident-postmortem-crew",
+        "bug-triage-crew",
+        "qa-automation-crew"
+      ],
+      "path": "companies/reliability-labs"
+    },
+    {
+      "name": "research-collective",
+      "title": "Research Collective",
+      "positioning": "A research org that turns questions into decision-ready briefs.",
+      "max_cost_usd": 6.0,
+      "memory_namespace": "research_collective",
+      "node_count": 4,
+      "member_agencies": [
+        "market-research-brief",
+        "data-analysis-crew",
+        "seo-brief-crew"
+      ],
+      "path": "companies/research-collective"
+    },
+    {
+      "name": "revenue-ops",
+      "title": "Revenue Ops",
+      "positioning": "Revenue operations: research accounts, analyze data, run outreach.",
+      "max_cost_usd": 6.0,
+      "memory_namespace": "revenue_ops",
+      "node_count": 4,
+      "member_agencies": [
+        "sales-outreach-crew",
+        "market-research-brief",
+        "data-analysis-crew"
+      ],
+      "path": "companies/revenue-ops"
+    },
+    {
+      "name": "support-hq",
+      "title": "Support HQ",
+      "positioning": "A support org: draft replies fast and run blameless postmortems.",
+      "max_cost_usd": 5.0,
+      "memory_namespace": "support_hq",
+      "node_count": 3,
+      "member_agencies": [
+        "support-macro-writer",
+        "incident-postmortem-crew"
+      ],
+      "path": "companies/support-hq"
     }
   ]
 }

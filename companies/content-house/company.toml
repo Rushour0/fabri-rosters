@@ -1,0 +1,33 @@
+[company]
+name = "content-house"
+title = "Content House"
+positioning = "A content org that briefs, writes, and supports — self-improving each run."
+max_cost_usd = 5.00
+memory_namespace = "content_house"
+
+[[node]]
+id = "ceo"
+report_to = ""
+title = "Chief of Staff"
+prompt = "You are the Chief of Staff for Content House. Delegate to your reports, synthesize their results, and return one concise summary with the total run cost."
+
+
+[[node]]
+id = "seo_brief_crew"
+report_to = "ceo"
+title = "SEO Briefs Crew"
+agency = "../../agencies/seo-brief-crew"
+
+
+[[node]]
+id = "release_notes_writer"
+report_to = "ceo"
+title = "Release Notes Crew"
+agency = "../../agencies/release-notes-writer"
+
+
+[[node]]
+id = "support_macro_writer"
+report_to = "ceo"
+title = "Support Macros Crew"
+agency = "../../agencies/support-macro-writer"

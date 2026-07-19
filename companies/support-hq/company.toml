@@ -1,0 +1,26 @@
+[company]
+name = "support-hq"
+title = "Support HQ"
+positioning = "A support org: draft replies fast and run blameless postmortems."
+max_cost_usd = 5.00
+memory_namespace = "support_hq"
+
+[[node]]
+id = "ceo"
+report_to = ""
+title = "Chief of Staff"
+prompt = "You are the Chief of Staff for Support HQ. Delegate to your reports, synthesize their results, and return one concise summary with the total run cost."
+
+
+[[node]]
+id = "support_macro_writer"
+report_to = "ceo"
+title = "Support Macros Crew"
+agency = "../../agencies/support-macro-writer"
+
+
+[[node]]
+id = "incident_postmortem_crew"
+report_to = "ceo"
+title = "Incident Postmortem Crew"
+agency = "../../agencies/incident-postmortem-crew"

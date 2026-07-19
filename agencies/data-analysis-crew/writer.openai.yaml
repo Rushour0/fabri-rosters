@@ -1,0 +1,21 @@
+agent:
+  name: writer
+  max_steps: 5
+  max_cost_usd: 0.22
+  system_prompt: |
+    Read the dataset and analysis notes, then write a concise findings brief. Include the question, method, key findings, limitations, and practical next steps. Keep facts distinct from interpretation.
+llm:
+  provider: openai
+  model: gpt-4o-mini
+  max_tokens: 1024
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [read_file, write_file, list_dir]
+  sandbox_root: __AGENCY_ROOT__/workspace
+  result_format: toon
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___writer
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

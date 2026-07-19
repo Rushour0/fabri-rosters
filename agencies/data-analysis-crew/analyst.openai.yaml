@@ -1,0 +1,21 @@
+agent:
+  name: analyst
+  max_steps: 5
+  max_cost_usd: 0.25
+  system_prompt: |
+    Inspect the supplied dataset using reproducible, lightweight commands. Check its shape and quality, calculate relevant descriptive summaries, and write evidence-backed observations. Do not overstate what a small sample proves.
+llm:
+  provider: openai
+  model: gpt-4o-mini
+  max_tokens: 1024
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [read_file, write_file, list_dir, bash]
+  sandbox_root: __AGENCY_ROOT__/workspace
+  result_format: toon
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___analyst
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

@@ -1,0 +1,28 @@
+agent:
+  name: qa-automation-crew
+  max_steps: 8
+  max_cost_usd: 0.55
+  system_prompt: |
+    You manage QA automation. Delegate test design and execution, inspect the results, and return a concise summary of generated coverage, test status, failures, and real run cost.
+llm:
+  provider: openai
+  model: gpt-4o-mini
+  max_tokens: 1024
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [writer, runner]
+  sandbox_root: __AGENCY_ROOT__/workspace
+  result_format: toon
+  agents:
+    - name: writer
+      description: Writes focused tests for the target module and its edge cases.
+      config: __AGENCY_ROOT__/writer.openai.yaml
+    - name: runner
+      description: Runs the test suite and reports actionable results.
+      config: __AGENCY_ROOT__/runner.openai.yaml
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___parent
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

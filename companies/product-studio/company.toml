@@ -1,0 +1,54 @@
+[company]
+name = "product-studio"
+title = "Product Studio"
+positioning = "Product + engineering under one roof, from research to shipped code."
+max_cost_usd = 8.00
+memory_namespace = "product_studio"
+
+[[node]]
+id = "ceo"
+report_to = ""
+title = "Chief of Staff"
+prompt = "You are the Chief of Staff for Product Studio. Delegate to your reports, synthesize their results, and return one concise summary with the total run cost."
+
+
+[[node]]
+id = "vp_product"
+report_to = "ceo"
+title = "VP Product"
+prompt = "Run discovery: research the market and design the API."
+
+
+[[node]]
+id = "market_research_brief"
+report_to = "vp_product"
+title = "Market Research Crew"
+agency = "../../agencies/market-research-brief"
+
+
+[[node]]
+id = "api_design_crew"
+report_to = "vp_product"
+title = "API Design Crew"
+agency = "../../agencies/api-design-crew"
+
+
+[[node]]
+id = "vp_eng"
+report_to = "ceo"
+title = "VP Engineering"
+prompt = "Build it: review code and automate the tests."
+
+
+[[node]]
+id = "code_review_crew"
+report_to = "vp_eng"
+title = "Code Review Crew"
+agency = "../../agencies/code-review-crew"
+
+
+[[node]]
+id = "qa_automation_crew"
+report_to = "vp_eng"
+title = "QA Automation Crew"
+agency = "../../agencies/qa-automation-crew"

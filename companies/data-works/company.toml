@@ -1,0 +1,26 @@
+[company]
+name = "data-works"
+title = "Data Works"
+positioning = "A data org that analyzes and researches to answer one question per run."
+max_cost_usd = 5.00
+memory_namespace = "data_works"
+
+[[node]]
+id = "ceo"
+report_to = ""
+title = "Chief of Staff"
+prompt = "You are the Chief of Staff for Data Works. Delegate to your reports, synthesize their results, and return one concise summary with the total run cost."
+
+
+[[node]]
+id = "data_analysis_crew"
+report_to = "ceo"
+title = "Data Analysis Crew"
+agency = "../../agencies/data-analysis-crew"
+
+
+[[node]]
+id = "market_research_brief"
+report_to = "ceo"
+title = "Market Research Crew"
+agency = "../../agencies/market-research-brief"

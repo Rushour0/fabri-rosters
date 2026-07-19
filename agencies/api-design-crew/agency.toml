@@ -1,0 +1,16 @@
+[agency]
+name = "api-design-crew"
+title = "API Design Crew"
+tagline = "Turns feature requirements into reviewed, practical REST API contracts."
+category = "Engineering & Product"
+deliverable = "A reviewed REST API contract (endpoints + schemas)."
+entry = "agent.openai.yaml"
+[agency.stats]
+agents = 3
+tools = 4
+[agency.cogs]
+max_cost_usd = 0.50
+provider = "openai"
+[agency.wedge]
+self_improving = true
+cogs_reported = true

@@ -1,0 +1,33 @@
+[company]
+name = "quality-guild"
+title = "Quality Guild"
+positioning = "A quality org that reviews, tests, and triages until it's green."
+max_cost_usd = 6.00
+memory_namespace = "quality_guild"
+
+[[node]]
+id = "ceo"
+report_to = ""
+title = "Chief of Staff"
+prompt = "You are the Chief of Staff for Quality Guild. Delegate to your reports, synthesize their results, and return one concise summary with the total run cost."
+
+
+[[node]]
+id = "code_review_crew"
+report_to = "ceo"
+title = "Code Review Crew"
+agency = "../../agencies/code-review-crew"
+
+
+[[node]]
+id = "qa_automation_crew"
+report_to = "ceo"
+title = "QA Automation Crew"
+agency = "../../agencies/qa-automation-crew"
+
+
+[[node]]
+id = "bug_triage_crew"
+report_to = "ceo"
+title = "Bug Triage Crew"
+agency = "../../agencies/bug-triage-crew"

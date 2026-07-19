@@ -1,0 +1,28 @@
+agent:
+  name: incident-postmortem-crew
+  max_steps: 8
+  max_cost_usd: 0.60
+  system_prompt: |
+    You manage a blameless incident postmortem crew. Delegate evidence-based investigation and clear writing, check that conclusions distinguish facts from inferences, and return the postmortem with real run cost.
+llm:
+  provider: openai
+  model: gpt-4o-mini
+  max_tokens: 1024
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [investigator, writer]
+  sandbox_root: __AGENCY_ROOT__/workspace
+  result_format: toon
+  agents:
+    - name: investigator
+      description: Extracts evidence, contributing conditions, and root-cause hypotheses from the timeline.
+      config: __AGENCY_ROOT__/investigator.openai.yaml
+    - name: writer
+      description: Writes a factual, blameless postmortem and specific follow-up actions.
+      config: __AGENCY_ROOT__/writer.openai.yaml
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___parent
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

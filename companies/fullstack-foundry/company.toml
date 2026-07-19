@@ -1,0 +1,47 @@
+[company]
+name = "fullstack-foundry"
+title = "Fullstack Foundry"
+positioning = "A self-improving engineering studio that ships and reports its cost per run."
+max_cost_usd = 8.00
+memory_namespace = "fullstack_foundry"
+
+[[node]]
+id = "ceo"
+report_to = ""
+title = "Chief of Staff"
+prompt = "You are the Chief of Staff for Fullstack Foundry. Delegate to your reports, synthesize their results, and return one concise summary with the total run cost."
+
+
+[[node]]
+id = "vp_eng"
+report_to = "ceo"
+title = "VP Engineering"
+prompt = "Direct the engineering crews and report status + run cost."
+
+
+[[node]]
+id = "api_design_crew"
+report_to = "vp_eng"
+title = "API Design Crew"
+agency = "../../agencies/api-design-crew"
+
+
+[[node]]
+id = "code_review_crew"
+report_to = "vp_eng"
+title = "Code Review Crew"
+agency = "../../agencies/code-review-crew"
+
+
+[[node]]
+id = "bug_triage_crew"
+report_to = "vp_eng"
+title = "Bug Triage Crew"
+agency = "../../agencies/bug-triage-crew"
+
+
+[[node]]
+id = "qa_automation_crew"
+report_to = "vp_eng"
+title = "QA Automation Crew"
+agency = "../../agencies/qa-automation-crew"

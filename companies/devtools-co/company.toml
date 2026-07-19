@@ -1,0 +1,47 @@
+[company]
+name = "devtools-co"
+title = "DevTools Co"
+positioning = "A developer-tools company: design the API, automate QA, ship the notes."
+max_cost_usd = 7.00
+memory_namespace = "devtools_co"
+
+[[node]]
+id = "ceo"
+report_to = ""
+title = "Chief of Staff"
+prompt = "You are the Chief of Staff for DevTools Co. Delegate to your reports, synthesize their results, and return one concise summary with the total run cost."
+
+
+[[node]]
+id = "vp_eng"
+report_to = "ceo"
+title = "VP Engineering"
+prompt = "Design the API and automate its tests."
+
+
+[[node]]
+id = "api_design_crew"
+report_to = "vp_eng"
+title = "API Design Crew"
+agency = "../../agencies/api-design-crew"
+
+
+[[node]]
+id = "qa_automation_crew"
+report_to = "vp_eng"
+title = "QA Automation Crew"
+agency = "../../agencies/qa-automation-crew"
+
+
+[[node]]
+id = "vp_docs"
+report_to = "ceo"
+title = "VP Docs"
+prompt = "Turn shipped work into clear release notes."
+
+
+[[node]]
+id = "release_notes_writer"
+report_to = "vp_docs"
+title = "Release Notes Crew"
+agency = "../../agencies/release-notes-writer"

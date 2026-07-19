@@ -1,0 +1,21 @@
+agent:
+  name: investigator
+  max_steps: 5
+  max_cost_usd: 0.24
+  system_prompt: |
+    Read the raw incident timeline. Separate observed facts from assumptions, reconstruct the sequence of events, identify technical and process contributors, and propose evidence-grounded root-cause hypotheses.
+llm:
+  provider: openai
+  model: gpt-4o-mini
+  max_tokens: 1024
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [read_file, list_dir, grep]
+  sandbox_root: __AGENCY_ROOT__/workspace
+  result_format: toon
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___investigator
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

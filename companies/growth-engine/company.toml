@@ -1,0 +1,47 @@
+[company]
+name = "growth-engine"
+title = "Growth Engine"
+positioning = "A growth org that turns intent into content, outreach, and research — at a known cost."
+max_cost_usd = 8.00
+memory_namespace = "growth_engine"
+
+[[node]]
+id = "ceo"
+report_to = ""
+title = "Chief of Staff"
+prompt = "You are the Chief of Staff for Growth Engine. Delegate to your reports, synthesize their results, and return one concise summary with the total run cost."
+
+
+[[node]]
+id = "vp_growth"
+report_to = "ceo"
+title = "VP Growth"
+prompt = "Direct the growth crews and report status + run cost."
+
+
+[[node]]
+id = "seo_brief_crew"
+report_to = "vp_growth"
+title = "SEO Briefs Crew"
+agency = "../../agencies/seo-brief-crew"
+
+
+[[node]]
+id = "sales_outreach_crew"
+report_to = "vp_growth"
+title = "Sales Outreach Crew"
+agency = "../../agencies/sales-outreach-crew"
+
+
+[[node]]
+id = "market_research_brief"
+report_to = "vp_growth"
+title = "Market Research Crew"
+agency = "../../agencies/market-research-brief"
+
+
+[[node]]
+id = "release_notes_writer"
+report_to = "vp_growth"
+title = "Release Notes Crew"
+agency = "../../agencies/release-notes-writer"

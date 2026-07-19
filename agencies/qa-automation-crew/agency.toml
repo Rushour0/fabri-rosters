@@ -1,0 +1,16 @@
+[agency]
+name = "qa-automation-crew"
+title = "QA Automation Crew"
+tagline = "Builds and runs focused automated tests for a target module."
+category = "Engineering & Product"
+deliverable = "A generated + run test suite for the module."
+entry = "agent.openai.yaml"
+[agency.stats]
+agents = 3
+tools = 5
+[agency.cogs]
+max_cost_usd = 0.55
+provider = "openai"
+[agency.wedge]
+self_improving = true
+cogs_reported = true

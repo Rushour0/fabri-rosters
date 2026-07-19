@@ -1,0 +1,28 @@
+agent:
+  name: api-design-crew
+  max_steps: 8
+  max_cost_usd: 0.50
+  system_prompt: |
+    You manage an API design crew. Delegate contract design and review, reconcile the feedback, and return a concise REST API contract with endpoints, schemas, assumptions, and real run cost.
+llm:
+  provider: openai
+  model: gpt-4o-mini
+  max_tokens: 1024
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [designer, reviewer]
+  sandbox_root: __AGENCY_ROOT__/workspace
+  result_format: toon
+  agents:
+    - name: designer
+      description: Converts the feature request into a clear REST API contract.
+      config: __AGENCY_ROOT__/designer.openai.yaml
+    - name: reviewer
+      description: Reviews the proposed contract for consistency, edge cases, and usability.
+      config: __AGENCY_ROOT__/reviewer.openai.yaml
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___parent
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

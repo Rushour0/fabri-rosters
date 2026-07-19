@@ -1,0 +1,61 @@
+[company]
+name = "launch-team"
+title = "Launch Team"
+positioning = "A cross-functional launch org: ship the code, tell the story."
+max_cost_usd = 8.00
+memory_namespace = "launch_team"
+
+[[node]]
+id = "ceo"
+report_to = ""
+title = "Chief of Staff"
+prompt = "You are the Chief of Staff for Launch Team. Delegate to your reports, synthesize their results, and return one concise summary with the total run cost."
+
+
+[[node]]
+id = "vp_eng"
+report_to = "ceo"
+title = "VP Engineering"
+prompt = "Ship it: fix bugs and review the code."
+
+
+[[node]]
+id = "bug_triage_crew"
+report_to = "vp_eng"
+title = "Bug Triage Crew"
+agency = "../../agencies/bug-triage-crew"
+
+
+[[node]]
+id = "code_review_crew"
+report_to = "vp_eng"
+title = "Code Review Crew"
+agency = "../../agencies/code-review-crew"
+
+
+[[node]]
+id = "vp_growth"
+report_to = "ceo"
+title = "VP Growth"
+prompt = "Launch it: notes, SEO, and outreach."
+
+
+[[node]]
+id = "release_notes_writer"
+report_to = "vp_growth"
+title = "Release Notes Crew"
+agency = "../../agencies/release-notes-writer"
+
+
+[[node]]
+id = "seo_brief_crew"
+report_to = "vp_growth"
+title = "SEO Briefs Crew"
+agency = "../../agencies/seo-brief-crew"
+
+
+[[node]]
+id = "sales_outreach_crew"
+report_to = "vp_growth"
+title = "Sales Outreach Crew"
+agency = "../../agencies/sales-outreach-crew"

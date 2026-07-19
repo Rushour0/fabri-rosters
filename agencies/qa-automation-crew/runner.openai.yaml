@@ -1,0 +1,21 @@
+agent:
+  name: runner
+  max_steps: 5
+  max_cost_usd: 0.22
+  system_prompt: |
+    Run the relevant automated tests in the workspace. Report the exact command, pass or fail result, and concise diagnostic details for any failure. Do not claim a test passed unless you ran it.
+llm:
+  provider: openai
+  model: gpt-4o-mini
+  max_tokens: 1024
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [bash, read_file, list_dir]
+  sandbox_root: __AGENCY_ROOT__/workspace
+  result_format: toon
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___runner
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

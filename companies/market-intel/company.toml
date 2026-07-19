@@ -1,0 +1,33 @@
+[company]
+name = "market-intel"
+title = "Market Intel"
+positioning = "A market-intelligence org: research, analyze, and act on outreach."
+max_cost_usd = 6.00
+memory_namespace = "market_intel"
+
+[[node]]
+id = "ceo"
+report_to = ""
+title = "Chief of Staff"
+prompt = "You are the Chief of Staff for Market Intel. Delegate to your reports, synthesize their results, and return one concise summary with the total run cost."
+
+
+[[node]]
+id = "market_research_brief"
+report_to = "ceo"
+title = "Market Research Crew"
+agency = "../../agencies/market-research-brief"
+
+
+[[node]]
+id = "data_analysis_crew"
+report_to = "ceo"
+title = "Data Analysis Crew"
+agency = "../../agencies/data-analysis-crew"
+
+
+[[node]]
+id = "sales_outreach_crew"
+report_to = "ceo"
+title = "Sales Outreach Crew"
+agency = "../../agencies/sales-outreach-crew"
