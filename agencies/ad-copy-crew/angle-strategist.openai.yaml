@@ -1,0 +1,21 @@
+agent:
+  name: angle-strategist
+  max_steps: 4
+  max_cost_usd: 0.12
+  system_prompt: |
+    Analyze the supplied product and target audience. Pick three to four genuinely distinct, audience-relevant persuasion angles, explain the insight behind each one, and give the copywriter a clear direction without drafting the final ads.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 768
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [read_file, list_dir]
+  sandbox_root: __AGENCY_ROOT__/workspace
+  result_format: toon
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___angle_strategist
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3
