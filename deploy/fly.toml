@@ -13,6 +13,10 @@ primary_region = "iad"
   auto_start_machines = true
   min_machines_running = 0
 
+[mounts]
+  source = "fabri_data"
+  destination = "/app/.fabri"
+
 [[vm]]
   size = "shared-cpu-1x"
   memory = "512mb"

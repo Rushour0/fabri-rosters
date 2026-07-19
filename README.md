@@ -11,6 +11,11 @@ fabri new agency --from gh:Rushour0/fabri-rosters/agencies/bug-triage-crew <dest
 fabri company compile companies/acme-eng/company.toml --dest <dest-dir>
 ```
 
+Companies compiled with Fabri 0.18.3+ have an institutional-memory collection
+at `<run-dir>/.fabri/<memory_namespace>.db`. The root manager learns from every
+company task and retrieves durable decisions and insights on later runs; leaf
+agencies keep their own specialized collections.
+
 ## Layout
 
 - `agencies/` — installable agencies

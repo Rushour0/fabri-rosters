@@ -26,7 +26,11 @@ This runs on **your** OpenAI key. Two layers keep the bill small:
 
 ```bash
 docker build -f deploy/Dockerfile -t fabri-studio-demo .
-docker run -p 8080:8080 -e OPENAI_API_KEY=sk-proj-… fabri-studio-demo
+docker volume create fabri-data
+docker run -p 8080:8080 \
+  -v fabri-data:/app/.fabri \
+  -e OPENAI_API_KEY=sk-proj-… \
+  fabri-studio-demo
 # open http://localhost:8080
 ```
 
@@ -34,7 +38,9 @@ docker run -p 8080:8080 -e OPENAI_API_KEY=sk-proj-… fabri-studio-demo
 
 ```bash
 cd deploy
-fly launch --copy-config --name fabri-studio-demo --now   # uses fly.toml + Dockerfile
+fly launch --copy-config --name fabri-studio-demo --no-deploy
+fly volumes create fabri_data --region iad --size 1
+fly deploy
 fly secrets set OPENAI_API_KEY=sk-proj-…                   # the $5-capped key
 # fly open
 ```
@@ -42,7 +48,27 @@ fly secrets set OPENAI_API_KEY=sk-proj-…                   # the $5-capped key
 ## Option C — Render / Railway / any container host
 
 Point the service at `deploy/Dockerfile`, expose the port it sets via `$PORT`,
-and add `OPENAI_API_KEY` as a secret. No other config needed.
+add `OPENAI_API_KEY` as a secret, and mount persistent storage at `/app/.fabri`.
+
+## Automatic prompt suggestions (optional)
+
+The container checks company memory once per day for `strategic` lessons that
+have recurred across at least three sessions. To open/update deduplicated,
+reviewable prompt-suggestion issues in this repository, add a `GITHUB_TOKEN`
+with Issues write access. With no token, the helper exits and no company context
+leaves the deployment.
+
+```sh
+docker run -p 8080:8080 \
+  -v fabri-data:/app/.fabri \
+  -e OPENAI_API_KEY=sk-proj-… \
+  -e GITHUB_TOKEN=github_pat_… \
+  fabri-studio-demo
+```
+
+Only promoted guidelines and the current manager prompt are sent to GitHub;
+raw tasks and transcripts are not. Leave this disabled for deployments whose
+company memory may contain confidential context.
 
 ---
 
