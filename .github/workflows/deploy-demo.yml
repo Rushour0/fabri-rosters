@@ -1,0 +1,46 @@
+name: Deploy Studio demo
+
+# Redeploys the public Fabri Studio catalog demo (fabri.rushour0.com) so new or
+# updated agencies + companies go live automatically. The demo is hosted by
+# Coolify (building deploy/Dockerfile from this repo), so all GitHub Actions has
+# to do is hit Coolify's deploy webhook and let it pull + rebuild. No Fly, no
+# SSH, no build here.
+#
+# One-time setup — add ONE repo secret (Settings -> Secrets and variables -> Actions):
+#   COOLIFY_TOKEN  a Coolify API token (Bearer) with permission to deploy this app.
+# The webhook URL below isn't secret on its own — the token is what authorizes a deploy.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "agencies/**"
+      - "companies/**"
+      - "index.json"
+      - "deploy/**"
+      - ".github/workflows/deploy-demo.yml"
+  workflow_dispatch:
+  # Lets fabri's release workflow trigger a redeploy with a new engine version
+  # (needs a cross-repo PAT on the fabri side — optional follow-up).
+  repository_dispatch:
+    types: [fabri-released]
+
+concurrency:
+  group: deploy-demo
+  cancel-in-progress: true
+
+env:
+  COOLIFY_WEBHOOK: "http://coolify.rushour0.com/api/v1/deploy?uuid=i3nj4ryi6j3vq6mlk5o03gm9&force=true"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # Only the canonical repo has the secret; forks/PRs skip cleanly.
+    if: github.repository == 'Rushour0/fabri-rosters'
+    steps:
+      - name: Trigger Coolify redeploy
+        run: |
+          curl -sS --fail-with-body -X GET \
+            -H "Authorization: Bearer ${COOLIFY_TOKEN}" \
+            "${COOLIFY_WEBHOOK}"
+        env:
+          COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
