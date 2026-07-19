@@ -17,7 +17,7 @@ ENV PIP_NO_CACHE_DIR=1 \
     PORT=8080
 
 RUN pip install torch --index-url https://download.pytorch.org/whl/cpu
-RUN pip install "fabri[sqlite,embeddings,bm25]>=0.16"
+RUN pip install "fabri[sqlite,embeddings,bm25]>=0.16.1"
 
 WORKDIR /app
 # Bundle the roster so `--catalog` can pre-install/compile every entry at startup.
