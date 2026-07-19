@@ -8,15 +8,17 @@
 
 ## Identity
 
-**Restrained, warm-dark, editorial.** Slate-not-void backgrounds, a single gold
+**Restrained, cool-dark, editorial.** Slate-not-void backgrounds, a single blue
 accent, generous hairlines, quiet motion. The reference bar is Linear / Vercel /
 Stripe restraint — *not* a colorful marketing site. It should read as an
 engineering product with taste, not a template.
 
-**One deliberate accent.** Gold `--accent` (#d7a13b) means **"this is the one
-thing to act on"** — the primary CTA, a pending question, a self-improving badge.
-It is never decorative, never a gradient, never applied to more than one focal
-point per view. Surfaces and body text own no hue.
+**One deliberate accent.** Blue `--accent` (#0d92f4) means **"this is the one
+thing to act on"** — the primary CTA, a pending question, an active/self-improving
+state. It is never a full-bleed gradient and never more than one focal point per
+view. `--accent-2` (#80c4e9) is a lighter companion for a hover, an eyebrow, or a
+subtle glow — supporting, never competing with, the primary accent. Surfaces and
+body text own no hue.
 
 **Anti-slop (hard rules).** No indigo/violet "AI purple" gradients. No
 gradient/rainbow text. No emoji as iconography (use `lucide-react` / inline SVG).
@@ -30,7 +32,7 @@ default. Tailwind reads them as semantic names (see preset).
 
 | Token | Dark | Light | Use |
 | --- | --- | --- | --- |
-| `--bg` | `#0c0d10` | `#f7f6f3` | page background |
+| `--bg` | `#0b0d12` | `#f7f8fa` | page background |
 | `--surface` | `#131418` | `#ffffff` | card / raised panel |
 | `--surface-2` | `#1a1c22` | `#f0efec` | input / hover / chip |
 | `--border` | `#24262d` | `#e4e2dc` | hairline |
@@ -38,8 +40,9 @@ default. Tailwind reads them as semantic names (see preset).
 | `--text` | `#e8e9ec` | `#1c1c1e` | tier-1 body |
 | `--text-dim` | `#9497a3` | `#5b5c63` | tier-2 labels, meta |
 | `--text-faint`| `#7c7f8b` | `#85868f` | tier-3 chrome (keep AA-legible) |
-| `--accent` | `#d7a13b` | `#b9822a` | THE accent — CTA / needs-you |
-| `--accent-soft`| `rgba(215,161,59,.14)` | `rgba(185,130,42,.12)` | accent wash |
+| `--accent` | `#0d92f4` | `#0a6ec0` | THE accent — CTA / needs-you |
+| `--accent-2` | `#80c4e9` | `#3a9fe0` | lighter companion — hover / eyebrow / glow |
+| `--accent-soft`| `rgba(13,146,244,.15)` | `rgba(13,146,244,.12)` | accent wash |
 | `--ok` | `#5fbf8f` | `#2f8f63` | success |
 | `--err` | `#e2695f` | `#e2695f` | error |
 
