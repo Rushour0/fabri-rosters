@@ -8,12 +8,15 @@
 # $5 spend cap.
 FROM python:3.12-slim
 
-# 0.15+ base install is lean (no torch); memory retrieval is an optional extra.
+# Full install: sqlite-vec (memory backend the agencies use) + embeddings
+# (sentence-transformers, so memory retrieval + self-improvement actually work)
+# + bm25 (hybrid retrieval). This pulls torch, so the image is large — fine for
+# an always-on host; agencies get the full self-improving behavior.
 ENV PIP_NO_CACHE_DIR=1 \
     PYTHONUNBUFFERED=1 \
     PORT=8080
 
-RUN pip install "fabri>=0.15.1"
+RUN pip install "fabri[sqlite,embeddings,bm25]>=0.15.1"
 
 WORKDIR /app
 COPY deploy/studio-demo.yaml /app/studio-demo.yaml
