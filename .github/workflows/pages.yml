@@ -20,10 +20,21 @@ jobs:
           python-version: "3.12"
       - name: Build catalog index
         run: python3 scripts/build_index.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Build the roster web app
+        # prebuild copies the fresh index.json into web/public so the app can
+        # fetch it at /fabri-rosters/index.json.
+        run: |
+          npm --prefix web ci
+          npm --prefix web run build
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: web/dist
   deploy:
     needs: build
     permissions:
