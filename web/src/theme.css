@@ -1,0 +1,54 @@
+/* Shared fabri theme variables — see ../DESIGN.md. Copied verbatim into each app
+   and imported once (before Tailwind's utilities), so the preset's semantic
+   color classes resolve to the same values everywhere. Dark is the default;
+   `:root[data-theme="light"]` (and the prefers-color-scheme fallback) flip it. */
+:root {
+  --bg: #0c0d10;
+  --surface: #131418;
+  --surface-2: #1a1c22;
+  --border: #24262d;
+  --border-2: #33363f;
+  --text: #e8e9ec;
+  --text-dim: #9497a3;
+  --text-faint: #7c7f8b;
+  --accent: #d7a13b;
+  --accent-soft: rgba(215, 161, 59, 0.14);
+  --ok: #5fbf8f;
+  --err: #e2695f;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --bg: #f7f6f3;
+  --surface: #ffffff;
+  --surface-2: #f0efec;
+  --border: #e4e2dc;
+  --border-2: #d3d0c8;
+  --text: #1c1c1e;
+  --text-dim: #5b5c63;
+  --text-faint: #85868f;
+  --accent: #b9822a;
+  --accent-soft: rgba(185, 130, 42, 0.12);
+  --ok: #2f8f63;
+  --err: #e2695f;
+  color-scheme: light;
+}
+
+/* Follow the OS when the user hasn't explicitly picked a theme. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f7f6f3;
+    --surface: #ffffff;
+    --surface-2: #f0efec;
+    --border: #e4e2dc;
+    --border-2: #d3d0c8;
+    --text: #1c1c1e;
+    --text-dim: #5b5c63;
+    --text-faint: #85868f;
+    --accent: #b9822a;
+    --accent-soft: rgba(185, 130, 42, 0.12);
+    --ok: #2f8f63;
+    --err: #e2695f;
+    color-scheme: light;
+  }
+}

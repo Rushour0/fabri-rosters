@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The fabri Roster — hire a company of AI agents</title>
+    <meta
+      name="description"
+      content="Small, self-improving, COGS-instrumented agencies you can hire in one command — on an open engine you can fork and own."
+    />
+    <script>
+      // Apply the persisted theme before first paint to avoid a flash.
+      try {
+        var t = localStorage.getItem("fabri-theme");
+        if (t) document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
