@@ -26,6 +26,7 @@ module.exports = {
           DEFAULT: "var(--accent)",
           soft: "var(--accent-soft)",
         },
+        "accent-2": "var(--accent-2)",
         ok: "var(--ok)",
         err: "var(--err)",
       },
