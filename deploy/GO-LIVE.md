@@ -32,7 +32,7 @@ Note the box's public IP.
 ```bash
 git clone https://github.com/Rushour0/fabri-rosters
 cd fabri-rosters
-docker build -t fabri-studio-demo deploy/
+docker build -f deploy/Dockerfile -t fabri-studio-demo .
 docker run -d --name fabri-studio --restart unless-stopped \
   -p 80:8080 \
   -e OPENAI_API_KEY='sk-proj-…your-$5-capped-key…' \
@@ -72,7 +72,7 @@ I can't do any of these without you providing them — they're your cloud, your 
 ## Updating later
 
 ```bash
-cd fabri-rosters && git pull && docker build -t fabri-studio-demo deploy/ \
+cd fabri-rosters && git pull && docker build -f deploy/Dockerfile -t fabri-studio-demo . \
   && docker rm -f fabri-studio \
   && docker run -d --name fabri-studio --restart unless-stopped -p 80:8080 \
      -e OPENAI_API_KEY='sk-proj-…' fabri-studio-demo

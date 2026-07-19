@@ -25,7 +25,7 @@ This runs on **your** OpenAI key. Two layers keep the bill small:
 ## Option A — Docker (any host, or local)
 
 ```bash
-docker build -t fabri-studio-demo deploy/
+docker build -f deploy/Dockerfile -t fabri-studio-demo .
 docker run -p 8080:8080 -e OPENAI_API_KEY=sk-proj-… fabri-studio-demo
 # open http://localhost:8080
 ```
