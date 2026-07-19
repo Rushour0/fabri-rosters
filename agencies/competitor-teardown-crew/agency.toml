@@ -1,0 +1,19 @@
+[agency]
+name = "competitor-teardown-crew"
+title = "Competitor Teardown Crew"
+tagline = "Turns a rival product into a structured teardown you can act on."
+category = "Research"
+deliverable = "A structured competitor teardown: positioning, key features, pricing, and the gaps to exploit."
+entry = "agent.openai.yaml"
+
+[agency.stats]
+agents = 3
+tools = 2
+
+[agency.cogs]
+max_cost_usd = 0.50
+provider = "openai"
+
+[agency.wedge]
+self_improving = true
+cogs_reported = true
