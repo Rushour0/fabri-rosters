@@ -61,6 +61,21 @@
       "path": "agencies/data-analysis-crew"
     },
     {
+      "name": "escalation-brief-crew",
+      "title": "Escalation Brief Crew",
+      "tagline": "Turns a stalled support thread into a crisp engineering escalation brief.",
+      "category": "Support & Ops",
+      "deliverable": "An engineering escalation brief: summary, repro steps, customer impact, and the specific ask.",
+      "entry": "agent.openai.yaml",
+      "agents": 3,
+      "tools": 3,
+      "max_cost_usd": 0.46,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/escalation-brief-crew"
+    },
+    {
       "name": "incident-postmortem-crew",
       "title": "Incident Postmortem Crew",
       "tagline": "Investigates incident timelines and writes blameless improvement plans.",

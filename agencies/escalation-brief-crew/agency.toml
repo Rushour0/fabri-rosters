@@ -1,0 +1,19 @@
+[agency]
+name = "escalation-brief-crew"
+title = "Escalation Brief Crew"
+tagline = "Turns a stalled support thread into a crisp engineering escalation brief."
+category = "Support & Ops"
+deliverable = "An engineering escalation brief: summary, repro steps, customer impact, and the specific ask."
+entry = "agent.openai.yaml"
+
+[agency.stats]
+agents = 3
+tools = 3
+
+[agency.cogs]
+max_cost_usd = 0.46
+provider = "openai"
+
+[agency.wedge]
+self_improving = true
+cogs_reported = true
