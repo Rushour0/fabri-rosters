@@ -17,7 +17,13 @@ ENV PIP_NO_CACHE_DIR=1 \
     PORT=8080
 
 RUN pip install torch --index-url https://download.pytorch.org/whl/cpu
-RUN pip install "fabri[sqlite,embeddings,bm25]>=0.16.1"
+# Cache-bust the fabri install whenever a new version publishes: the PyPI
+# metadata JSON changes on each release, so this ADD's content changes and Docker
+# invalidates the pip layer below. Without it, the layer stays cached at an old
+# fabri version and redeploys silently ship a stale Studio (which is exactly what
+# happened — the demo kept serving a pre-blue build). --upgrade for good measure.
+ADD https://pypi.org/pypi/fabri/json /tmp/fabri-pypi.json
+RUN pip install --upgrade "fabri[sqlite,embeddings,bm25]>=0.16.1"
 
 WORKDIR /app
 # Bundle the roster so `--catalog` can pre-install/compile every entry at startup.
