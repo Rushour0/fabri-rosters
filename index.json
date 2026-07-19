@@ -414,6 +414,20 @@
       "path": "companies/revenue-ops"
     },
     {
+      "name": "seo-studio",
+      "title": "SEO Studio",
+      "positioning": "An SEO & ad-content studio: size up rivals, brief the keywords, write the copy.",
+      "max_cost_usd": 6.0,
+      "memory_namespace": "seo_studio",
+      "node_count": 5,
+      "member_agencies": [
+        "competitor-teardown-crew",
+        "seo-brief-crew",
+        "ad-copy-crew"
+      ],
+      "path": "companies/seo-studio"
+    },
+    {
       "name": "support-hq",
       "title": "Support HQ",
       "positioning": "A support org: draft replies fast and run blameless postmortems.",

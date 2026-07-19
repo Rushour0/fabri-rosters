@@ -1,0 +1,36 @@
+[company]
+name = "seo-studio"
+title = "SEO Studio"
+positioning = "An SEO & ad-content studio: size up rivals, brief the keywords, write the copy."
+max_cost_usd = 6.00
+memory_namespace = "seo_studio"
+
+[[node]]
+id = "ceo"
+report_to = ""
+title = "Chief of Staff"
+prompt = "You are the Chief of Staff for SEO Studio. Delegate to your reports in order, synthesize their results, and return one concise summary with the total run cost."
+
+[[node]]
+id = "vp_marketing"
+report_to = "ceo"
+title = "VP Marketing"
+prompt = "You own organic and paid content. Work in order: first understand the competitive landscape, then brief the SEO from it, then write the ad copy that ships."
+
+[[node]]
+id = "competitor_teardown_crew"
+report_to = "vp_marketing"
+title = "Competitor Teardown Crew"
+agency = "../../agencies/competitor-teardown-crew"
+
+[[node]]
+id = "seo_brief_crew"
+report_to = "vp_marketing"
+title = "SEO Brief Crew"
+agency = "../../agencies/seo-brief-crew"
+
+[[node]]
+id = "ad_copy_crew"
+report_to = "vp_marketing"
+title = "Ad Copy Crew"
+agency = "../../agencies/ad-copy-crew"
