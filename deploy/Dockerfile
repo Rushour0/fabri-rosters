@@ -8,14 +8,16 @@
 # $5 spend cap.
 FROM python:3.12-slim
 
-# Full install: sqlite-vec (memory backend the agencies use) + embeddings
-# (sentence-transformers, so memory retrieval + self-improvement actually work)
-# + bm25 (hybrid retrieval). This pulls torch, so the image is large — fine for
-# an always-on host; agencies get the full self-improving behavior.
+# Full install so agencies self-improve: sqlite-vec (memory backend) + embeddings
+# (sentence-transformers) + bm25. CRITICAL: install CPU-only torch FIRST — the
+# default `pip install torch` pulls ~5-7GB of CUDA/nvidia libs (useless on a CPU
+# box, and it blows small disks). CPU torch is ~200MB and satisfies
+# sentence-transformers, so the [embeddings] extra won't re-pull the CUDA build.
 ENV PIP_NO_CACHE_DIR=1 \
     PYTHONUNBUFFERED=1 \
     PORT=8080
 
+RUN pip install torch --index-url https://download.pytorch.org/whl/cpu
 RUN pip install "fabri[sqlite,embeddings,bm25]>=0.15.1"
 
 WORKDIR /app
