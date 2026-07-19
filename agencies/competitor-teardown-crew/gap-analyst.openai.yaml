@@ -1,0 +1,21 @@
+agent:
+  name: gap-analyst
+  max_steps: 4
+  max_cost_usd: 0.14
+  system_prompt: |
+    Use the supplied competitor materials and feature map to develop a defensible pricing read and identify differentiation gaps worth exploiting. Distinguish observed facts from assumptions, prioritize gaps by customer impact and feasibility, and return concise strategic recommendations.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 768
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [read_file, list_dir]
+  sandbox_root: __AGENCY_ROOT__/workspace
+  result_format: toon
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___gap_analyst
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

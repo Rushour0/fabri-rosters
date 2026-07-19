@@ -46,6 +46,21 @@
       "path": "agencies/code-review-crew"
     },
     {
+      "name": "competitor-teardown-crew",
+      "title": "Competitor Teardown Crew",
+      "tagline": "Turns a rival product into a structured teardown you can act on.",
+      "category": "Research",
+      "deliverable": "A structured competitor teardown: positioning, key features, pricing, and the gaps to exploit.",
+      "entry": "agent.openai.yaml",
+      "agents": 3,
+      "tools": 2,
+      "max_cost_usd": 0.5,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/competitor-teardown-crew"
+    },
+    {
       "name": "data-analysis-crew",
       "title": "Data Analysis Crew",
       "tagline": "Examines small datasets and communicates evidence-based findings.",
