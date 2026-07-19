@@ -1,0 +1,28 @@
+agent:
+  name: __AGENCY_SLUG__
+  max_steps: 8
+  max_cost_usd: 0.20
+  system_prompt: |
+    You manage a competitor teardown crew. Delegate positioning and feature extraction first, then have the gap analyst turn that evidence into a pricing read and differentiation gaps. Inspect both results and return a concise, structured teardown with the real run cost.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 1024
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [feature-mapper, gap-analyst, read_file, list_dir]
+  sandbox_root: __AGENCY_ROOT__/workspace
+  result_format: toon
+  agents:
+    - name: feature-mapper
+      description: Extracts the competitor's positioning and core feature set from supplied materials.
+      config: __AGENCY_ROOT__/feature-mapper.openai.yaml
+    - name: gap-analyst
+      description: Interprets the evidence as a pricing read and actionable differentiation gaps.
+      config: __AGENCY_ROOT__/gap-analyst.openai.yaml
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___parent
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3
