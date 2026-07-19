@@ -1,0 +1,19 @@
+[agency]
+name = "ad-copy-crew"
+title = "Ad Copy Crew"
+tagline = "Turns a product and audience into scroll-stopping ad copy variants across distinct angles."
+category = "Growth & Marketing"
+deliverable = "A set of ad copy variants (headlines + primary text) across distinct angles, with a rationale for each."
+entry = "agent.openai.yaml"
+
+[agency.stats]
+agents = 3
+tools = 2
+
+[agency.cogs]
+max_cost_usd = 0.50
+provider = "openai"
+
+[agency.wedge]
+self_improving = true
+cogs_reported = true
