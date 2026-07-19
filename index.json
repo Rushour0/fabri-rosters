@@ -1,6 +1,21 @@
 {
   "agencies": [
     {
+      "name": "ad-copy-crew",
+      "title": "Ad Copy Crew",
+      "tagline": "Turns a product and audience into scroll-stopping ad copy variants across distinct angles.",
+      "category": "Growth & Marketing",
+      "deliverable": "A set of ad copy variants (headlines + primary text) across distinct angles, with a rationale for each.",
+      "entry": "agent.openai.yaml",
+      "agents": 3,
+      "tools": 2,
+      "max_cost_usd": 0.5,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/ad-copy-crew"
+    },
+    {
       "name": "api-design-crew",
       "title": "API Design Crew",
       "tagline": "Turns feature requirements into reviewed, practical REST API contracts.",

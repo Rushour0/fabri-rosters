@@ -1,0 +1,28 @@
+agent:
+  name: __AGENCY_SLUG__
+  max_steps: 6
+  max_cost_usd: 0.24
+  system_prompt: |
+    You manage an ad copy crew. Delegate angle selection and copywriting, inspect both results, and return a concise set of ad copy variants with a rationale for each angle and the real run cost.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 1024
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [angle-strategist, copywriter, read_file, list_dir]
+  sandbox_root: __AGENCY_ROOT__/workspace
+  result_format: toon
+  agents:
+    - name: angle-strategist
+      description: Selects distinct persuasion angles for the product and audience.
+      config: __AGENCY_ROOT__/angle-strategist.openai.yaml
+    - name: copywriter
+      description: Writes headline and primary-text variants for each selected angle.
+      config: __AGENCY_ROOT__/copywriter.openai.yaml
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___parent
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3
