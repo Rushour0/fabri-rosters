@@ -23,7 +23,7 @@ RUN pip install torch --index-url https://download.pytorch.org/whl/cpu
 # fabri version and redeploys silently ship a stale Studio (which is exactly what
 # happened — the demo kept serving a pre-blue build). --upgrade for good measure.
 ADD https://pypi.org/pypi/fabri/json /tmp/fabri-pypi.json
-RUN pip install --upgrade "fabri[sqlite,embeddings,bm25]>=0.16.1"
+RUN pip install --upgrade "fabri[sqlite,embeddings,bm25]>=0.18.3"
 
 WORKDIR /app
 # Bundle the roster so `--catalog` can pre-install/compile every entry at startup.
@@ -31,11 +31,14 @@ COPY index.json /app/rosters/index.json
 COPY agencies /app/rosters/agencies
 COPY companies /app/rosters/companies
 COPY deploy/studio-demo.yaml /app/studio-demo.yaml
+COPY scripts/suggest_company_prompts.py /app/scripts/suggest_company_prompts.py
 
 # fabri writes per-run workspaces + a sqlite memory db under the working dir.
 RUN mkdir -p /app/.fabri && useradd -m demo && chown -R demo /app
 USER demo
 
 EXPOSE 8080
-# Serve the whole roster (catalog mode). Bind 0.0.0.0; honor the platform's $PORT.
-CMD ["sh", "-c", "fabri studio --catalog /app/rosters --host 0.0.0.0 --port ${PORT:-8080}"]
+# Serve the whole roster (catalog mode). Company memory and run history live on
+# /app/.fabri. Prompt suggestions are opt-in: the helper exits immediately
+# unless GITHUB_TOKEN is configured.
+CMD ["sh", "-c", "python /app/scripts/suggest_company_prompts.py --watch & exec fabri studio --catalog /app/rosters --home-root /app/.fabri/serve --host 0.0.0.0 --port ${PORT:-8080}"]

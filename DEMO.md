@@ -4,7 +4,7 @@ A ~5-minute walkthrough of the three surfaces: a **catalog** of self-improving
 agencies, a **human-in-the-loop** flow, and a **multi-level company** org chart
 with live cost. Everything is real — real agents, real per-run COGS.
 
-> Prereqs: `fabri >= 0.15` (`pip install -U fabri` or run from a checkout), an
+> Prereqs: `fabri >= 0.18.3` (`pip install -U fabri` or run from a checkout), an
 > `OPENAI_API_KEY`, and this repo cloned. `fabri` does **not** auto-load `.env` —
 > export your key first: `export OPENAI_API_KEY=…`.
 
@@ -70,6 +70,10 @@ fabri studio --company companies/acme-eng/company.toml --port 8792
 - In **Conversation**, submit *"Give me a one-line status from each division."*
   Flip to **Company**: the nodes **light up with live status and real per-node
   cost**, and the header shows total spend (e.g. *spent $0.0084*).
+- The Chief of Staff keeps a durable **company memory** across sessions. Every
+  company task records a postmortem; durable decisions, facts, insights, and
+  open loops are retrieved into later runs while credentials, personal data,
+  and unverified claims are explicitly excluded.
 
 Edit `companies/acme-eng/company.toml` (add a node, change `report_to`) and
 re-serve to reshape the org — `fabri company compile` validates it's a tree and
