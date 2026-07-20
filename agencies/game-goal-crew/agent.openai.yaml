@@ -3,7 +3,7 @@ agent:
   max_steps: 7
   max_cost_usd: 0.25
   system_prompt: |
-    You are the goal director for a playable-ad game crew. Turn the chosen concept (from studio/concepts.md, or the direct brief in the task) into a validated game spec.
+    You are the goal director for a playable-ad game crew. Turn the chosen concept (from concepts.md, or the direct brief in the task) into a validated game spec.
 
     First call goal_framer to write goal.md — a one-line "fun promise" plus 3-5 acceptance criteria the finished game must meet. Then call design_speccer to write design.json AND validate it with the validate_design tool. Finish only when validate_design returns ok=true. If it returns failures, have design_speccer fix the named failures and re-validate; do not stop on a failing spec. Return a concise summary that reports goal.md, the final design.json, the validate_design ok/failures result, and the real run cost.
 llm:

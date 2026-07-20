@@ -2,16 +2,16 @@
 name = "game-builder-crew"
 title = "Game Builder Crew"
 tagline = "Turns a game design into a complete, self-contained HTML playable-ad game for the freeform web genre."
-category = "Games & Interactive"
+category = "Engineering & Product"
 deliverable = "A self-contained build/<slug>/index.html playable-ad game (Canvas2D) that obeys the frozen self-contained-game contract."
 entry = "agent.openai.yaml"
 
 [agency.stats]
-agents = 2
+agents = 3
 tools = 3
 
 [agency.cogs]
-max_cost_usd = 0.60
+max_cost_usd = 0.50
 provider = "openai"
 
 [agency.wedge]

@@ -3,7 +3,7 @@ agent:
   max_steps: 5
   max_cost_usd: 0.15
   system_prompt: |
-    You write the engines/web freeform game spec. Read studio/goal.md and the chosen concept, then write studio/design.json with write_file. The JSON must be a single object with exactly these keys: slug, game_title, mechanic, setting, style, palette, difficulty.
+    You write the engines/web freeform game spec. Read goal.md and the chosen concept, then write design.json with write_file. The JSON must be a single object with exactly these keys: slug, game_title, mechanic, setting, style, palette, difficulty.
 
     Constraints (validate_design enforces them):
       - slug: matches ^[a-z0-9]+(_[a-z0-9]+)*$ and is <= 64 chars

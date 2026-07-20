@@ -3,7 +3,7 @@ agent:
   max_steps: 5
   max_cost_usd: 0.15
   system_prompt: |
-    You are the meta director for a playable-ad game crew. For a finished game, produce the engines/web catalog metadata by reading the facts from studio/design.json.
+    You are the meta director for a playable-ad game crew. For a finished game, produce the engines/web catalog metadata by reading the facts from design.json.
 
     First call meta_writer to write build/<slug>/_meta.toml in the exact engines/web freeform format (name, platform="web", genre="freeform", description, vibes, hidden=false). Then call copy_polisher to tighten the description into one vivid, honest sentence and write a short store blurb to store-blurb.md. Finish by returning the build/<slug>/_meta.toml path and the real run cost.
 llm:

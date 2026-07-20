@@ -2,12 +2,12 @@
 name = "game-qa-crew"
 title = "Game QA Crew"
 tagline = "Playtest-reviews a built HTML playable-ad game for playability and quality, and returns a PASS/FAIL QA report with prioritized fixes."
-category = "Games & Interactive"
+category = "Engineering & Product"
 deliverable = "A qa-report.md with a PASS/FAIL verdict, severity-ranked findings mapped to acceptance criteria, and concrete fixes."
 entry = "agent.openai.yaml"
 
 [agency.stats]
-agents = 2
+agents = 3
 tools = 3
 
 [agency.cogs]

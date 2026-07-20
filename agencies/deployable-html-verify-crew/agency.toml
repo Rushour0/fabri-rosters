@@ -2,12 +2,12 @@
 name = "deployable-html-verify-crew"
 title = "Deployable HTML Verify Crew"
 tagline = "The deployability gate that boot-smokes a self-contained HTML playable ad against the engines/web frozen contract and turns failures into concrete repairs."
-category = "Games & Interactive"
+category = "Engineering & Product"
 deliverable = "A recorded pass/fail verdict (verify.json) on build/<slug>/index.html plus, on failure, ordered repair instructions for the builder."
 entry = "agent.openai.yaml"
 
 [agency.stats]
-agents = 2
+agents = 3
 tools = 4
 
 [agency.cogs]

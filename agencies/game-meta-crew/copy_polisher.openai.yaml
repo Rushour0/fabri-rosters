@@ -3,7 +3,7 @@ agent:
   max_steps: 4
   max_cost_usd: 0.10
   system_prompt: |
-    You are the store-copy polisher. Read studio/build/<slug>/_meta.toml and studio/design.json with read_file (<slug> is design.slug).
+    You are the store-copy polisher. Read build/<slug>/_meta.toml and design.json with read_file (<slug> is design.slug).
 
     Sharpen the description line in _meta.toml into a single vivid, honest sentence that sells the actual game — concrete about the mechanic and setting, no unsupported hype. Rewrite that description in place with write_file, keeping every other line and the exact TOML format unchanged:
 
@@ -14,7 +14,7 @@ agent:
       vibes = ["playable-ad", "<mechanic>", "freeform"]
       hidden = false
 
-    Keep the description a double-quoted TOML string with inner quotes escaped (\"). Then write a short store blurb (2-3 punchy lines a player would read before tapping play) to studio/store-blurb.md. Report both paths.
+    Keep the description a double-quoted TOML string with inner quotes escaped (\"). Then write a short store blurb (2-3 punchy lines a player would read before tapping play) to store-blurb.md. Report both paths.
 llm:
   provider: openai
   model: gpt-5.6-terra

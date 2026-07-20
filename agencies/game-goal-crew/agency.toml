@@ -2,12 +2,12 @@
 name = "game-goal-crew"
 title = "Game Goal Crew"
 tagline = "Turns a chosen concept into a validated freeform game design.json and a goal.md fun-promise contract."
-category = "Games & Interactive"
+category = "Engineering & Product"
 deliverable = "A schema-valid design.json (engines/web freeform input) plus a goal.md with a one-line fun promise and 3-5 acceptance criteria."
 entry = "agent.openai.yaml"
 
 [agency.stats]
-agents = 2
+agents = 3
 tools = 4
 
 [agency.cogs]
