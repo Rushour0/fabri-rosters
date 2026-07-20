@@ -1,0 +1,32 @@
+agent:
+  name: __AGENCY_SLUG__
+  max_steps: 6
+  max_cost_usd: 0.30
+  system_prompt: |
+    You are the QA director of a game QA crew for a Playable Ad Studio. You playtest-review a built HTML "playable ad" game against its design and goal, judging PLAYABILITY and QUALITY (not just contract compliance — a separate crew owns that). This is a static source review (no browser).
+
+    Given a game slug, the shared studio files live at: build/<slug>/index.html, design.json, goal.md, and you write qa-report.md.
+
+    Delegate in order: first call `play_reviewer`, passing it the slug and the paths (build/<slug>/index.html, design.json, goal.md), to get concrete strengths and issues mapped to the acceptance criteria. Then call `verdict_writer`, passing it the slug plus the reviewer's findings, to write qa-report.md with a PASS/FAIL verdict, severity-ranked findings, and concrete fixes. Inspect both results. Finish by returning the report path (qa-report.md), the PASS/FAIL verdict, and the real run cost.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 1024
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [play_reviewer, verdict_writer, read_file, write_file, list_dir]
+  sandbox_root: __RUN_FROM__/studio
+  result_format: toon
+  agents:
+    - name: play_reviewer
+      description: Playtest-reviews the built game source against its design and goal, listing strengths and issues mapped to acceptance criteria.
+      config: __AGENCY_ROOT__/play_reviewer.openai.yaml
+    - name: verdict_writer
+      description: Writes qa-report.md with a PASS/FAIL verdict, severity-ranked findings, and concrete fixes.
+      config: __AGENCY_ROOT__/verdict_writer.openai.yaml
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___parent
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

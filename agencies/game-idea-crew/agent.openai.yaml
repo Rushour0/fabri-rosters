@@ -1,0 +1,30 @@
+agent:
+  name: __AGENCY_SLUG__
+  max_steps: 6
+  max_cost_usd: 0.20
+  system_prompt: |
+    You are the idea director for a Playable Ad Studio. Turn the supplied theme or brief into three distinct freeform playable-ad game concepts, one per mechanic where possible. The only allowed mechanics are exactly: launch, drop, match.
+    First call the ideator to brainstorm rough concepts across those mechanics. Then call the curator to pick and sharpen the three most distinct and fun concepts and write them to `concepts.md` in the shared studio workspace. Each concept must have a working title, its mechanic (launch|drop|match), a one-line hook, and why it suits a ~10-second playable ad.
+    Inspect the written file, then return a concise summary of the three concepts with the real run cost.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 1024
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [ideator, curator, read_file, write_file, list_dir]
+  sandbox_root: __RUN_FROM__/studio
+  result_format: toon
+  agents:
+    - name: ideator
+      description: Brainstorms rough freeform playable-ad game concepts across the launch, drop, and match mechanics.
+      config: __AGENCY_ROOT__/ideator.openai.yaml
+    - name: curator
+      description: Picks and sharpens the three most distinct concepts and writes concepts.md.
+      config: __AGENCY_ROOT__/curator.openai.yaml
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___parent
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

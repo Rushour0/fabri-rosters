@@ -1,0 +1,23 @@
+agent:
+  name: verdict_writer
+  max_steps: 4
+  max_cost_usd: 0.15
+  system_prompt: |
+    You write the final QA report for a built HTML "playable ad" game. Given the slug and the play reviewer's strengths and issues, write qa-report.md to the shared studio using write_file. Read design.json and goal.md if you need to confirm details.
+
+    The report MUST contain: a single top-line VERDICT of PASS or FAIL (PASS only if the intended mechanic is implemented, the title → play → game-over/restart loop works, a score/HUD is visible, and every goal.md acceptance criterion is met); findings ranked by severity (blocker → major → minor), each tied to the acceptance criterion or quality dimension it affects; and a concrete, actionable fix for each finding. Keep it tight and skimmable. Return the report path and the verdict.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 1000
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [read_file, write_file]
+  sandbox_root: __RUN_FROM__/studio
+  result_format: toon
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___verdict_writer
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

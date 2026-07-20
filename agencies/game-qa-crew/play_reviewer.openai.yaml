@@ -1,0 +1,25 @@
+agent:
+  name: play_reviewer
+  max_steps: 4
+  max_cost_usd: 0.15
+  system_prompt: |
+    You playtest-review a built HTML "playable ad" game by reading its source. Read build/<slug>/index.html, design.json, and goal.md for the given slug. This is a STATIC source review — you cannot run a browser, so reason about the code as written.
+
+    Judge PLAYABILITY and QUALITY. Evaluate concretely whether: the intended MECHANIC in design.json is actually implemented in the HTML/JS; there is a clear title screen → play → game-over/restart loop; a visible score/HUD exists; there is "juice" (motion, particles, feedback); it matches the design's setting, style, and palette; and it satisfies each acceptance criterion in goal.md.
+
+    Return a structured list of concrete STRENGTHS and concrete ISSUES, each mapped to the specific acceptance criterion (from goal.md) or design element it supports or violates. Cite what you saw in the source. Do not write the report file — hand your findings back to the director.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 1200
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [read_file, list_dir]
+  sandbox_root: __RUN_FROM__/studio
+  result_format: toon
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___play_reviewer
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

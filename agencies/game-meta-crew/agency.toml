@@ -1,0 +1,19 @@
+[agency]
+name = "game-meta-crew"
+title = "Game Meta Crew"
+tagline = "Writes the engines/web freeform catalog metadata and store blurb for a finished playable-ad game."
+category = "Games & Interactive"
+deliverable = "A catalog-exact build/<slug>/_meta.toml (engines/web freeform format) plus a short, polished store blurb."
+entry = "agent.openai.yaml"
+
+[agency.stats]
+agents = 2
+tools = 3
+
+[agency.cogs]
+max_cost_usd = 0.15
+provider = "openai"
+
+[agency.wedge]
+self_improving = true
+cogs_reported = true

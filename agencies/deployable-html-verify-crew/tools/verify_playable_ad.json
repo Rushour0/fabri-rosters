@@ -1,0 +1,22 @@
+{
+  "name": "verify_playable_ad",
+  "description": "Boot-smoke a self-contained playable-ad index.html against the frozen contract (exactly one <canvas>, no external/remote resources, no forbidden network/storage/eval APIs, and the window.__smokeReady boot hook). Returns ok=false with concrete problems to feed a repair. A game that passes is deployable into the engines/web freeform genre.",
+  "command": ["python3", "verify_playable_ad.py"],
+  "input_schema": {
+    "type": "object",
+    "required": ["html_path"],
+    "properties": {
+      "html_path": {"type": "string", "description": "Sandbox-relative path to the game's index.html"}
+    },
+    "additionalProperties": false
+  },
+  "output_schema": {
+    "type": "object",
+    "required": ["ok", "problems"],
+    "properties": {
+      "ok": {"type": "boolean"},
+      "problems": {"type": "array", "items": {"type": "string"}}
+    }
+  },
+  "timeout_s": 15
+}

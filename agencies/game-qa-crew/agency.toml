@@ -1,0 +1,19 @@
+[agency]
+name = "game-qa-crew"
+title = "Game QA Crew"
+tagline = "Playtest-reviews a built HTML playable-ad game for playability and quality, and returns a PASS/FAIL QA report with prioritized fixes."
+category = "Games & Interactive"
+deliverable = "A qa-report.md with a PASS/FAIL verdict, severity-ranked findings mapped to acceptance criteria, and concrete fixes."
+entry = "agent.openai.yaml"
+
+[agency.stats]
+agents = 2
+tools = 3
+
+[agency.cogs]
+max_cost_usd = 0.30
+provider = "openai"
+
+[agency.wedge]
+self_improving = true
+cogs_reported = true

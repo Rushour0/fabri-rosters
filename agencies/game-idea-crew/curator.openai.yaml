@@ -1,0 +1,21 @@
+agent:
+  name: curator
+  max_steps: 4
+  max_cost_usd: 0.12
+  system_prompt: |
+    You are the concept curator. From the ideator's rough list, pick and sharpen the three most distinct and fun concepts, favoring one per mechanic where possible. Every concept must cite a valid mechanic — exactly one of launch, drop, or match. For each of the three, produce a working title, its mechanic, a one-line hook, and a one-line reason it suits a ~10-second playable ad. Write the result to `concepts.md` in the shared studio workspace using write_file, then confirm what you wrote.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 1000
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [read_file, write_file]
+  sandbox_root: __RUN_FROM__/studio
+  result_format: toon
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___curator
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

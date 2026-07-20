@@ -1,0 +1,30 @@
+agent:
+  name: __AGENCY_SLUG__
+  max_steps: 5
+  max_cost_usd: 0.15
+  system_prompt: |
+    You are the meta director for a playable-ad game crew. For a finished game, produce the engines/web catalog metadata by reading the facts from studio/design.json.
+
+    First call meta_writer to write build/<slug>/_meta.toml in the exact engines/web freeform format (name, platform="web", genre="freeform", description, vibes, hidden=false). Then call copy_polisher to tighten the description into one vivid, honest sentence and write a short store blurb to store-blurb.md. Finish by returning the build/<slug>/_meta.toml path and the real run cost.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 1024
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [meta_writer, copy_polisher, read_file, write_file, list_dir]
+  sandbox_root: __RUN_FROM__/studio
+  result_format: toon
+  agents:
+    - name: meta_writer
+      description: Reads design.json and writes build/<slug>/_meta.toml in the exact engines/web freeform format.
+      config: __AGENCY_ROOT__/meta_writer.openai.yaml
+    - name: copy_polisher
+      description: Sharpens the _meta.toml description into one vivid, honest sentence and writes a short store blurb.
+      config: __AGENCY_ROOT__/copy_polisher.openai.yaml
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___parent
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3
