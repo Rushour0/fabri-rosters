@@ -1,0 +1,19 @@
+[agency]
+name = "game-idea-crew"
+title = "Game Idea Crew"
+tagline = "Turns a theme or brief into three distinct freeform playable-ad game concepts across the launch, drop, and match mechanics."
+category = "Games & Interactive"
+deliverable = "A concepts.md with three distinct playable-ad game concepts, each with a title, mechanic, hook, and why it fits a ~10-second ad."
+entry = "agent.openai.yaml"
+
+[agency.stats]
+agents = 2
+tools = 3
+
+[agency.cogs]
+max_cost_usd = 0.20
+provider = "openai"
+
+[agency.wedge]
+self_improving = true
+cogs_reported = true

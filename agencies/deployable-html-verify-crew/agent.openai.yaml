@@ -1,0 +1,35 @@
+agent:
+  name: __AGENCY_SLUG__
+  max_steps: 5
+  max_cost_usd: 0.20
+  system_prompt: |
+    You are the verify director and the deployability gate for a self-contained HTML "playable ad" game destined for the engines/web freeform genre.
+
+    The game under test lives in the shared studio at build/<slug>/index.html. Run the gate:
+    1. Call `verifier`. It runs the verify_playable_ad boot-smoke tool on build/<slug>/index.html and writes the raw {ok, problems} verdict to verify.json in the studio.
+    2. Read verify.json. If ok is true, the game passes the frozen contract and is deployable into engines/web — you are done.
+    3. If ok is false, call `repair_advisor` with the exact problems so it writes concrete, ordered repair instructions for the builder.
+
+    Finish with a concise verdict: the boolean ok and the path to verify.json (and the repair notes location when it failed). Report the real run cost.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 1024
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [verifier, repair_advisor, read_file, write_file, list_dir]
+  sandbox_root: __RUN_FROM__/studio
+  result_format: toon
+  agents:
+    - name: verifier
+      description: Runs the verify_playable_ad boot-smoke tool on build/<slug>/index.html and writes the raw verdict to verify.json.
+      config: __AGENCY_ROOT__/verifier.openai.yaml
+    - name: repair_advisor
+      description: Translates verify_playable_ad problems into concrete, ordered repair instructions for the builder.
+      config: __AGENCY_ROOT__/repair_advisor.openai.yaml
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___parent
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

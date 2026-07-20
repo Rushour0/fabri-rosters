@@ -1,0 +1,22 @@
+{
+  "name": "validate_design",
+  "description": "Validate a game design.json against the engines/web freeform playable-ad schema (slug pattern, mechanic in {launch,match,drop}, difficulty in {easy,medium,hard}, and game_title/setting/style/palette length bounds). Returns ok=false with concrete failures so the spec can be fixed.",
+  "command": ["python3", "validate_design.py"],
+  "input_schema": {
+    "type": "object",
+    "required": ["design_path"],
+    "properties": {
+      "design_path": {"type": "string", "description": "Sandbox-relative path to design.json"}
+    },
+    "additionalProperties": false
+  },
+  "output_schema": {
+    "type": "object",
+    "required": ["ok", "failures"],
+    "properties": {
+      "ok": {"type": "boolean"},
+      "failures": {"type": "array", "items": {"type": "string"}}
+    }
+  },
+  "timeout_s": 10
+}
