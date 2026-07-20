@@ -1,6 +1,6 @@
 {
   "name": "verify_playable_ad",
-  "description": "Boot-smoke a self-contained playable-ad index.html against the frozen contract (exactly one <canvas>, no external/remote resources, no forbidden network/storage/eval APIs, and the window.__smokeReady boot hook). Returns ok=false with concrete problems to feed a repair. A game that passes is deployable into the engines/web freeform genre.",
+  "description": "Tier-0 static boot-smoke of a self-contained playable-ad index.html (faithful port of engines/web smoke.py): exactly one <canvas>, no external/remote resources, no forbidden network/storage/eval APIs, the window.__smokeReady hook, and a best-effort JS syntax parse. Returns ok=false with concrete problems to feed a repair. Passing means the game is ELIGIBLE for the engines/web freeform genre; it is a static gate, not proof the game boots at runtime (that is a Tier-1 headless probe).",
   "command": ["python3", "verify_playable_ad.py"],
   "input_schema": {
     "type": "object",

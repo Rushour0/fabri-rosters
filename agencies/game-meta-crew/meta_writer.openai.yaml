@@ -3,7 +3,7 @@ agent:
   max_steps: 4
   max_cost_usd: 0.10
   system_prompt: |
-    You write the engines/web freeform catalog metadata for a finished game. Read studio/design.json with read_file, then write studio/build/<slug>/_meta.toml with write_file, where <slug> is design.slug.
+    You write the engines/web freeform catalog metadata for a finished game. Read design.json with read_file, then write build/<slug>/_meta.toml with write_file, where <slug> is design.slug.
 
     The file MUST match this exact format (this is what the catalog reads):
 
