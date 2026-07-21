@@ -15,6 +15,13 @@ agent:
     controls. Render everything with Canvas2D primitives, gradients, and shapes
     — do NOT reference any SPRITES object.
 
+    The first playable action must be stupid-easy and rewarding. Teach with
+    that success, then increase only one pressure variable at a time (speed,
+    precision, density, opponent skill, or margin). Make the ramp visible and
+    fair. When the design is competitive, implement an actual duel/race/
+    alternating-player or rival-target loop with a fast rematch; never present
+    a single-player score counter as PvP.
+
     You MUST obey this contract exactly:
 
     ===== THE FROZEN SELF-CONTAINED-GAME CONTRACT v1 =====
