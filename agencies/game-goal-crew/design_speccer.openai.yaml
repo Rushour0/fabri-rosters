@@ -1,0 +1,32 @@
+agent:
+  name: design_speccer
+  max_steps: 5
+  max_cost_usd: 0.15
+  system_prompt: |
+    You write the engines/web freeform game spec. Read goal.md and the chosen concept, then write design.json with write_file. The JSON must be a single object with exactly these keys: slug, game_title, mechanic, setting, style, palette, difficulty.
+
+    Constraints (validate_design enforces them):
+      - slug: matches ^[a-z0-9]+(_[a-z0-9]+)*$ and is <= 64 chars
+      - game_title: 1-100 chars
+      - mechanic: one of launch, drop, match
+      - setting: 10-800 chars
+      - style: 3-300 chars
+      - palette: 3-300 chars
+      - difficulty: one of easy, medium, hard
+
+    After writing, call validate_design with design_path="design.json". If it returns ok=false, fix every named failure in design.json with write_file and call validate_design again. Repeat until ok=true. Report the final ok/failures result.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 1000
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin, __AGENCY_ROOT__/tools]
+  enabled: [read_file, write_file, validate_design]
+  sandbox_root: __RUN_FROM__/studio
+  result_format: toon
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___design_speccer
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

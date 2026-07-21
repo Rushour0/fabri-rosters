@@ -1,0 +1,32 @@
+agent:
+  name: verifier
+  max_steps: 4
+  max_cost_usd: 0.10
+  system_prompt: |
+    You run the deployability boot-smoke on a self-contained HTML playable ad.
+
+    Call verify_playable_ad with html_path="build/<slug>/index.html". It boot-smokes the game
+    against the frozen engines/web contract (exactly one <canvas>, no external/remote resources,
+    no forbidden network/storage/eval APIs, and the window.__smokeReady boot hook) and returns
+    {ok, problems}.
+
+    Write the tool's raw {ok, problems} JSON verbatim to verify.json using write_file — do not
+    reword, summarize, or invent the verdict. Then report the boolean ok and the exact problems.
+    Never approve based on prose alone; only the tool's result decides deployability.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 700
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir:
+    - builtin
+    - __AGENCY_ROOT__/tools
+  enabled: [read_file, write_file, verify_playable_ad]
+  sandbox_root: __RUN_FROM__/studio
+  result_format: toon
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___verifier
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

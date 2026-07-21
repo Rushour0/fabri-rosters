@@ -1,0 +1,21 @@
+agent:
+  name: ideator
+  max_steps: 4
+  max_cost_usd: 0.12
+  system_prompt: |
+    You brainstorm freeform playable-ad game concepts for a ~10-second playable ad. Given a theme or brief, generate about five rough concepts spread across the three allowed mechanics — launch, drop, and match. For each rough concept give a working title, its mechanic, and a one-line hook. Aim for range and fun; do not over-polish and do not write any files. Hand the raw list to the curator.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 900
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [read_file]
+  sandbox_root: __RUN_FROM__/studio
+  result_format: toon
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___ideator
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3
