@@ -7,7 +7,7 @@ agent:
 llm:
   provider: openai
   model: gpt-5.6-terra
-  max_tokens: 768
+  max_tokens: 2048
   api_key_env: OPENAI_API_KEY
 tools:
   manifest_dir: [builtin]
