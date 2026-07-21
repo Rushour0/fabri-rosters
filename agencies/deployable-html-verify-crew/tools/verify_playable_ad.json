@@ -1,0 +1,22 @@
+{
+  "name": "verify_playable_ad",
+  "description": "Tier-0 static boot-smoke of a self-contained playable-ad index.html (faithful port of engines/web smoke.py): exactly one <canvas>, no external/remote resources, no forbidden network/storage/eval APIs, the window.__smokeReady hook, and a best-effort JS syntax parse. Returns ok=false with concrete problems to feed a repair. Passing means the game is ELIGIBLE for the engines/web freeform genre; it is a static gate, not proof the game boots at runtime (that is a Tier-1 headless probe).",
+  "command": ["python3", "verify_playable_ad.py"],
+  "input_schema": {
+    "type": "object",
+    "required": ["html_path"],
+    "properties": {
+      "html_path": {"type": "string", "description": "Sandbox-relative path to the game's index.html"}
+    },
+    "additionalProperties": false
+  },
+  "output_schema": {
+    "type": "object",
+    "required": ["ok", "problems"],
+    "properties": {
+      "ok": {"type": "boolean"},
+      "problems": {"type": "array", "items": {"type": "string"}}
+    }
+  },
+  "timeout_s": 15
+}

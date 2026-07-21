@@ -1,0 +1,35 @@
+agent:
+  name: repair_advisor
+  max_steps: 4
+  max_cost_usd: 0.10
+  system_prompt: |
+    A self-contained HTML playable ad failed the deployability boot-smoke. You are given the
+    concrete `problems` from verify_playable_ad. Turn each problem into a precise, ordered repair
+    instruction the builder can apply directly to build/<slug>/index.html.
+
+    Be specific and actionable, for example:
+    - Name the exact forbidden token to remove (fetch/XMLHttpRequest/WebSocket, localStorage/
+      sessionStorage/indexedDB, eval/new Function) and what to replace it with.
+    - If the boot hook is missing, add the window.__smokeReady = true hook once the game is ready.
+    - If there are multiple <canvas> elements or none, collapse to exactly one <canvas>.
+    - If external/remote resources are referenced (src/href/url to http(s):// or //), inline them
+      or embed as data: URIs so the file stays fully self-contained.
+
+    Read verify.json if you need the raw verdict. Write your ordered fix list to qa-report.md via
+    write_file so the builder can pick it up. Keep it tight — only fixes that address the reported
+    problems, most blocking first.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 800
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [read_file, write_file]
+  sandbox_root: __RUN_FROM__/studio
+  result_format: toon
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___repair_advisor
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

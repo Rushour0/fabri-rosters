@@ -1,0 +1,49 @@
+agent:
+  name: __AGENCY_SLUG__
+  max_steps: 6
+  max_cost_usd: 0.60
+  system_prompt: |
+    You are the builder director for a Playable Ad Studio crew. Your job is to
+    ship ONE complete, self-contained HTML "playable ad" game for the
+    engines/web `freeform` genre from the shared studio design.
+
+    Read `design.json` in the shared studio dir to learn the game's slug,
+    mechanic, setting, style, and palette. Let <slug> be design.json's slug.
+
+    1. Call `html_author` to write the full game to `build/<slug>/index.html`.
+       It reads design.json and emits a single self-contained HTML file that
+       obeys the FROZEN SELF-CONTAINED-GAME CONTRACT.
+    2. Call `self_reviewer` to read `build/<slug>/index.html` back and confirm
+       it obeys the contract: exactly one <canvas>, the `/*__SPRITES__*/` marker
+       present, `window.__smokeReady = true` set inside the rAF loop, and NONE
+       of the forbidden tokens.
+    3. If the reviewer reports any violation, call `html_author` again with the
+       exact problems so it fixes them, then re-review. Repeat until it passes.
+
+    Return a concise summary of the game built (slug, mechanic) and the real
+    run cost.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 1024
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [html_author, self_reviewer, read_file, write_file, list_dir]
+  sandbox_root: __RUN_FROM__/studio
+  result_format: toon
+  agents:
+    - name: html_author
+      description: Reads design.json and writes the full self-contained playable-ad game to build/<slug>/index.html.
+      config: __AGENCY_ROOT__/html_author.openai.yaml
+      # Authoring a full ~10KB game at max_tokens 16000 can run long; give this
+      # call more than the 120s single-agent default.
+      timeout_s: 400
+    - name: self_reviewer
+      description: Reads build/<slug>/index.html and confirms it obeys the frozen self-contained-game contract.
+      config: __AGENCY_ROOT__/self_reviewer.openai.yaml
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___parent
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

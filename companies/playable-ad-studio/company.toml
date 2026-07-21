@@ -1,0 +1,76 @@
+[company]
+name = "playable-ad-studio"
+title = "Playable Ad Studio"
+positioning = "Turns a game brief into a validated, deployable freeform playable-ad HTML game for engines/web — idea to design to build to QA to deploy-gate to catalog metadata — at a known cost."
+max_cost_usd = 4.00
+memory_namespace = "playable_ad_studio"
+# A manager waits for its whole subtree; the CEO->director->crew->specialist
+# chain needs far more than the 120s single-agent default. Injected into every
+# manager child-call at compile time.
+call_timeout_s = 1200
+
+[[node]]
+id = "ceo"
+report_to = ""
+title = "Studio Head"
+prompt = """
+You run Playable Ad Studio. Your crews all share one working directory ('studio') that flows files between them. Produce ONE finished, deployable freeform playable-ad game from the brief by delegating IN THIS ORDER and passing the shared paths explicitly:
+1. Creative Director → concepts (concepts.md) then the chosen design (design.json, validated) + goal (goal.md).
+2. Production Director → build the game (build/<slug>/index.html), QA it (qa-report.md), and run the deploy gate (verify.json). <slug> is design.json's slug.
+3. Release Director → catalog metadata (build/<slug>/_meta.toml).
+Finish ONLY when the deploy gate (verify.json) reports ok=true. If it fails, send the repair guidance back to the Production Director to rebuild, then re-verify. Return one concise summary: the game slug, the index.html path, the deploy-gate verdict, and the total run cost.
+"""
+
+[[node]]
+id = "creative_director"
+report_to = "ceo"
+title = "Creative Director"
+prompt = "Own concept + design. First call the Game Idea Crew to write concepts.md, pick the strongest concept, then call the Game Goal Crew to produce a validated design.json and goal.md for it. Report the chosen slug and design."
+
+[[node]]
+id = "game_idea_crew"
+report_to = "creative_director"
+title = "Game Idea Crew"
+agency = "../../agencies/game-idea-crew"
+
+[[node]]
+id = "game_goal_crew"
+report_to = "creative_director"
+title = "Game Goal Crew"
+agency = "../../agencies/game-goal-crew"
+
+[[node]]
+id = "production_director"
+report_to = "ceo"
+title = "Production Director"
+prompt = "Own build + quality + deployability. Call the Game Builder Crew to write build/<slug>/index.html from design.json, the Game QA Crew to playtest-review it (qa-report.md), and the Deployable HTML Verify Crew to run the frozen-contract boot-smoke gate (verify.json). If the gate fails, relay its repair guidance to the Game Builder Crew, rebuild, and re-verify. Report the gate verdict."
+
+[[node]]
+id = "game_builder_crew"
+report_to = "production_director"
+title = "Game Builder Crew"
+agency = "../../agencies/game-builder-crew"
+
+[[node]]
+id = "game_qa_crew"
+report_to = "production_director"
+title = "Game QA Crew"
+agency = "../../agencies/game-qa-crew"
+
+[[node]]
+id = "deployable_html_verify_crew"
+report_to = "production_director"
+title = "Deployable HTML Verify Crew"
+agency = "../../agencies/deployable-html-verify-crew"
+
+[[node]]
+id = "release_director"
+report_to = "ceo"
+title = "Release Director"
+prompt = "Own catalog readiness. Once the game passes the deploy gate, call the Game Meta Crew to write build/<slug>/_meta.toml (engines/web freeform catalog format) and a store blurb. Report the metadata path."
+
+[[node]]
+id = "game_meta_crew"
+report_to = "release_director"
+title = "Game Meta Crew"
+agency = "../../agencies/game-meta-crew"

@@ -91,6 +91,21 @@
       "path": "agencies/data-analysis-crew"
     },
     {
+      "name": "deployable-html-verify-crew",
+      "title": "Deployable HTML Verify Crew",
+      "tagline": "The deployability gate that boot-smokes a self-contained HTML playable ad against the engines/web frozen contract and turns failures into concrete repairs.",
+      "category": "Engineering & Product",
+      "deliverable": "A recorded pass/fail verdict (verify.json) on build/<slug>/index.html plus, on failure, ordered repair instructions for the builder.",
+      "entry": "agent.openai.yaml",
+      "agents": 3,
+      "tools": 4,
+      "max_cost_usd": 0.2,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/deployable-html-verify-crew"
+    },
+    {
       "name": "escalation-brief-crew",
       "title": "Escalation Brief Crew",
       "tagline": "Turns a stalled support thread into a crisp engineering escalation brief.",
@@ -104,6 +119,81 @@
       "self_improving": true,
       "cogs_reported": true,
       "path": "agencies/escalation-brief-crew"
+    },
+    {
+      "name": "game-builder-crew",
+      "title": "Game Builder Crew",
+      "tagline": "Turns a game design into a complete, self-contained HTML playable-ad game for the freeform web genre.",
+      "category": "Engineering & Product",
+      "deliverable": "A self-contained build/<slug>/index.html playable-ad game (Canvas2D) that obeys the frozen self-contained-game contract.",
+      "entry": "agent.openai.yaml",
+      "agents": 3,
+      "tools": 3,
+      "max_cost_usd": 0.5,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/game-builder-crew"
+    },
+    {
+      "name": "game-goal-crew",
+      "title": "Game Goal Crew",
+      "tagline": "Turns a chosen concept into a validated freeform game design.json and a goal.md fun-promise contract.",
+      "category": "Engineering & Product",
+      "deliverable": "A schema-valid design.json (engines/web freeform input) plus a goal.md with a one-line fun promise and 3-5 acceptance criteria.",
+      "entry": "agent.openai.yaml",
+      "agents": 3,
+      "tools": 4,
+      "max_cost_usd": 0.25,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/game-goal-crew"
+    },
+    {
+      "name": "game-idea-crew",
+      "title": "Game Idea Crew",
+      "tagline": "Turns a theme or brief into three distinct freeform playable-ad game concepts across the launch, drop, and match mechanics.",
+      "category": "Engineering & Product",
+      "deliverable": "A concepts.md with three distinct playable-ad game concepts, each with a title, mechanic, hook, and why it fits a ~10-second ad.",
+      "entry": "agent.openai.yaml",
+      "agents": 3,
+      "tools": 3,
+      "max_cost_usd": 0.2,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/game-idea-crew"
+    },
+    {
+      "name": "game-meta-crew",
+      "title": "Game Meta Crew",
+      "tagline": "Writes the engines/web freeform catalog metadata and store blurb for a finished playable-ad game.",
+      "category": "Engineering & Product",
+      "deliverable": "A catalog-exact build/<slug>/_meta.toml (engines/web freeform format) plus a short, polished store blurb.",
+      "entry": "agent.openai.yaml",
+      "agents": 3,
+      "tools": 3,
+      "max_cost_usd": 0.15,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/game-meta-crew"
+    },
+    {
+      "name": "game-qa-crew",
+      "title": "Game QA Crew",
+      "tagline": "Playtest-reviews a built HTML playable-ad game for playability and quality, and returns a PASS/FAIL QA report with prioritized fixes.",
+      "category": "Engineering & Product",
+      "deliverable": "A qa-report.md with a PASS/FAIL verdict, severity-ranked findings mapped to acceptance criteria, and concrete fixes.",
+      "entry": "agent.openai.yaml",
+      "agents": 3,
+      "tools": 3,
+      "max_cost_usd": 0.3,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/game-qa-crew"
     },
     {
       "name": "incident-postmortem-crew",
@@ -341,6 +431,24 @@
         "sales-outreach-crew"
       ],
       "path": "companies/market-intel"
+    },
+    {
+      "name": "playable-ad-studio",
+      "title": "Playable Ad Studio",
+      "positioning": "Turns a game brief into a validated, deployable freeform playable-ad HTML game for engines/web \u2014 idea to design to build to QA to deploy-gate to catalog metadata \u2014 at a known cost.",
+      "max_cost_usd": 4.0,
+      "memory_namespace": "playable_ad_studio",
+      "call_timeout_s": 1200,
+      "node_count": 10,
+      "member_agencies": [
+        "game-idea-crew",
+        "game-goal-crew",
+        "game-builder-crew",
+        "game-qa-crew",
+        "deployable-html-verify-crew",
+        "game-meta-crew"
+      ],
+      "path": "companies/playable-ad-studio"
     },
     {
       "name": "product-studio",

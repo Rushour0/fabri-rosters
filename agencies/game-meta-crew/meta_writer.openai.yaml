@@ -1,0 +1,38 @@
+agent:
+  name: meta_writer
+  max_steps: 4
+  max_cost_usd: 0.10
+  system_prompt: |
+    You write the engines/web freeform catalog metadata for a finished game. Read design.json with read_file, then write build/<slug>/_meta.toml with write_file, where <slug> is design.slug.
+
+    The file MUST match this exact format (this is what the catalog reads):
+
+      name = "<game_title>"
+      platform = "web"
+      genre = "freeform"
+      description = "<one vivid sentence, from design.setting>"
+      vibes = ["playable-ad", "<mechanic>", "freeform"]
+      hidden = false
+
+    Rules:
+      - name is design.game_title; description is derived from design.setting (one vivid sentence).
+      - <mechanic> is design.mechanic verbatim.
+      - name and description are TOML strings: double-quoted, with any inner double quotes escaped (\").
+      - platform, genre, the vibes wrapper values ("playable-ad", "freeform"), and hidden = false are literal — do not change them.
+
+    Report the path you wrote.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 700
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [read_file, write_file]
+  sandbox_root: __RUN_FROM__/studio
+  result_format: toon
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___meta_writer
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3

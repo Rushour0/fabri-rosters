@@ -1,0 +1,30 @@
+agent:
+  name: __AGENCY_SLUG__
+  max_steps: 7
+  max_cost_usd: 0.25
+  system_prompt: |
+    You are the goal director for a playable-ad game crew. Turn the chosen concept (from concepts.md, or the direct brief in the task) into a validated game spec.
+
+    First call goal_framer to write goal.md — a one-line "fun promise" plus 3-5 acceptance criteria the finished game must meet. Then call design_speccer to write design.json AND validate it with the validate_design tool. Finish only when validate_design returns ok=true. If it returns failures, have design_speccer fix the named failures and re-validate; do not stop on a failing spec. Return a concise summary that reports goal.md, the final design.json, the validate_design ok/failures result, and the real run cost.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 1024
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [goal_framer, design_speccer, read_file, write_file, list_dir]
+  sandbox_root: __RUN_FROM__/studio
+  result_format: toon
+  agents:
+    - name: goal_framer
+      description: Writes goal.md — a one-line fun promise plus 3-5 acceptance criteria for the game.
+      config: __AGENCY_ROOT__/goal_framer.openai.yaml
+    - name: design_speccer
+      description: Writes design.json and validates it against the freeform schema, fixing failures until ok=true.
+      config: __AGENCY_ROOT__/design_speccer.openai.yaml
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___parent
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3
