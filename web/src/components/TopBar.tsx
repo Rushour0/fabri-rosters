@@ -28,6 +28,12 @@ export function TopBar() {
         </a>
         <nav className="flex items-center gap-1 text-sm text-ink-dim">
           <a
+            href="#benchmarks"
+            className="rounded-md px-3 py-1.5 transition-colors ease-fabri hover:bg-surface-2 hover:text-ink"
+          >
+            Benchmarks
+          </a>
+          <a
             href="https://fabri.rushour0.com"
             target="_blank"
             rel="noreferrer"
