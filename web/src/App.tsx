@@ -129,8 +129,9 @@ export default function App() {
 
         {benchmarkRecords.length > 0 && (
           <section
+            id="benchmarks"
             aria-labelledby="benchmarks-heading"
-            className="mx-auto max-w-content px-5 py-12"
+            className="mx-auto max-w-content px-5 py-12 scroll-mt-14"
           >
             <div className="mb-5">
               <h2 id="benchmarks-heading" className="text-2xl font-semibold tracking-tight text-ink">
