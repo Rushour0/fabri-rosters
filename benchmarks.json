@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-07-22",
+  "records": [
+    {
+      "subject_type": "company",
+      "subject": "reliability-labs",
+      "benchmark": "memory vs true no-memory control",
+      "date": "2026-07-22",
+      "fabri_version": "0.19.1",
+      "roster_revision": null,
+      "replicas": 6,
+      "quality": {
+        "memory_corrected_pct": 100.0,
+        "control_corrected_pct": 100.0,
+        "memory_raw_pct": 80.0,
+        "control_raw_pct": 83.3,
+        "memory_n": 5,
+        "control_n": 6
+      },
+      "cost": {
+        "clean_pairs": 5,
+        "memory_cheaper_pairs": 2,
+        "mean_delta_usd": 0.013294,
+        "sign_test_p": 1.0,
+        "verdict": "no significant difference"
+      },
+      "control_memory_free": true,
+      "excluded_arms": 1,
+      "spend_usd": 1.3994,
+      "report_url": "https://github.com/Rushour0/fabri/blob/main/benchmarks/results/memory-vs-true-control-2026-07-22.md"
+    },
+    {
+      "subject_type": "company",
+      "subject": "revenue-ops",
+      "benchmark": "memory vs true no-memory control",
+      "date": "2026-07-22",
+      "fabri_version": "0.19.1",
+      "roster_revision": null,
+      "replicas": 6,
+      "quality": {
+        "memory_corrected_pct": 100.0,
+        "control_corrected_pct": 66.7,
+        "memory_raw_pct": 100.0,
+        "control_raw_pct": 66.7,
+        "memory_n": 4,
+        "control_n": 6
+      },
+      "cost": {
+        "clean_pairs": 4,
+        "memory_cheaper_pairs": 0,
+        "mean_delta_usd": 0.031364,
+        "sign_test_p": 0.125,
+        "verdict": "no significant difference"
+      },
+      "control_memory_free": true,
+      "excluded_arms": 2,
+      "spend_usd": 2.6654,
+      "report_url": "https://github.com/Rushour0/fabri/blob/main/benchmarks/results/memory-vs-true-control-2026-07-22.md"
+    },
+    {
+      "subject_type": "company",
+      "subject": "support-hq",
+      "benchmark": "memory vs true no-memory control",
+      "date": "2026-07-22",
+      "fabri_version": "0.19.1",
+      "roster_revision": null,
+      "replicas": 6,
+      "quality": {
+        "memory_corrected_pct": 100.0,
+        "control_corrected_pct": 100.0,
+        "memory_raw_pct": 100.0,
+        "control_raw_pct": 100.0,
+        "memory_n": 5,
+        "control_n": 6
+      },
+      "cost": {
+        "clean_pairs": 5,
+        "memory_cheaper_pairs": 2,
+        "mean_delta_usd": 0.000976,
+        "sign_test_p": 1.0,
+        "verdict": "no significant difference"
+      },
+      "control_memory_free": true,
+      "excluded_arms": 1,
+      "spend_usd": 0.6391,
+      "report_url": "https://github.com/Rushour0/fabri/blob/main/benchmarks/results/memory-vs-true-control-2026-07-22.md"
+    }
+  ],
+  "headline": "No significant memory effect on quality or cost across three companies. Both the earlier \u201cmemory hurts\u201d result and an initial \u201cmemory wins\u201d reading were substring-rubric artifacts; these numbers use a corrected rubric and a control verified to retrieve zero guidelines."
+}
