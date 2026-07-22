@@ -19,7 +19,48 @@ export interface Company {
   members?: (string | { name?: string; title?: string })[];
 }
 
+export interface BenchmarkQuality {
+  memory_corrected_pct?: number;
+  control_corrected_pct?: number;
+  memory_raw_pct?: number;
+  control_raw_pct?: number;
+  memory_n?: number;
+  control_n?: number;
+}
+
+export interface BenchmarkCost {
+  clean_pairs?: number;
+  memory_cheaper_pairs?: number;
+  mean_delta_usd?: number;
+  sign_test_p?: number;
+  verdict?: string;
+}
+
+export interface BenchmarkRecord {
+  subject_type?: string;
+  subject?: string;
+  benchmark?: string;
+  date?: string;
+  fabri_version?: string;
+  roster_revision?: string | null;
+  replicas?: number;
+  quality?: BenchmarkQuality;
+  cost?: BenchmarkCost;
+  control_memory_free?: boolean;
+  excluded_arms?: number;
+  spend_usd?: number;
+  report_url?: string;
+}
+
+export interface Benchmarks {
+  schema_version?: number;
+  generated_at?: string;
+  headline?: string;
+  records?: BenchmarkRecord[];
+}
+
 export interface Catalog {
   agencies: Agency[];
   companies?: Company[];
+  benchmarks?: Benchmarks;
 }
