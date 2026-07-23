@@ -1,0 +1,19 @@
+[company]
+name = "agentworks"
+title = "AgentWorks"
+positioning = "A holding company of AI-native agencies with a real invoice behind every delivery."
+max_cost_usd = 20.00
+memory_namespace = "agentworks"
+
+[[node]]
+id = "ceo"
+report_to = ""
+title = "Chief of Staff"
+prompt = "You are the Chief of Staff for AgentWorks. Delegate to your reports, synthesize their results, and return one concise summary with the total run cost."
+
+
+[[node]]
+id = "bug_fix_crew"
+report_to = "ceo"
+title = "Bug Triage Crew"
+agency = "../../agencies/bug-triage-crew"

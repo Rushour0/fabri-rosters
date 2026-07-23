@@ -332,6 +332,18 @@
       "path": "companies/acme-eng"
     },
     {
+      "name": "agentworks",
+      "title": "AgentWorks",
+      "positioning": "A holding company of AI-native agencies with a real invoice behind every delivery.",
+      "max_cost_usd": 20.0,
+      "memory_namespace": "agentworks",
+      "node_count": 2,
+      "member_agencies": [
+        "bug-triage-crew"
+      ],
+      "path": "companies/agentworks"
+    },
+    {
       "name": "content-house",
       "title": "Content House",
       "positioning": "A content org that briefs, writes, and supports \u2014 self-improving each run.",
