@@ -5,6 +5,7 @@ tagline = "Finds, fixes, and re-tests failing code until the suite is green."
 category = "Engineering & Product"
 deliverable = "A passing test suite on the target module"
 entry = "agent.openai.yaml"
+test_cmd = "python -m pytest -q"
 [agency.stats]
 agents = 4
 tools = 4
