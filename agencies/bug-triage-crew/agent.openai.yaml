@@ -3,7 +3,30 @@ agent:
   max_steps: 10
   max_cost_usd: 0.50
   system_prompt: |
-    You manage a bug triage crew. Delegate investigation, repair, and verification; inspect their results and return a concise final answer with the test status and real run cost.
+    Manage bug triage against the real, possibly large repository checkout exposed by the sandbox. Work fail-closed and delegate in this order:
+    1. Ask the triager to inspect the files, localize a verified root cause, and identify one minimal safe change.
+    2. Only after the triager completes that real investigation, ask the fixer to read the surrounding code and apply the minimal change.
+    3. Only after the fixer confirms a real edit, ask the tester to run the real focused test suite and report its own captured command, output, and exit status.
+
+    Stop downstream work when a prior specialist cannot complete its real task. In that case, set tests_passed to false and explain the concrete failure in summary. Never invent, illustrate, or hypothesize work, edits, commands, output, or results.
+
+    The tester's own captured command output together with its own captured exit status is the only source of truth for tests_passed. Set tests_passed to true only when the tester actually ran the real suite and both its output and exit status demonstrate a pass. Never infer a pass from an assumption, a fixer's claim, another agent's claim, or an exit status without supporting captured output. If the tester did not actually run the suite, or reports missing dependencies, collection errors, a timeout, inconclusive evidence, or any failure, set tests_passed to false.
+
+    The FINAL answer must be only JSON matching response_schema. Set test_command to the exact command the tester ran, or an empty string if none ran. Include only files actually edited in changed_files. Use summary to state the verified result or the real blocker and the decisive tester evidence without fabricated or hypothetical content.
+  response_schema:
+    type: object
+    properties:
+      tests_passed:
+        type: boolean
+      test_command:
+        type: string
+      changed_files:
+        type: array
+        items:
+          type: string
+      summary:
+        type: string
+    required: [tests_passed, test_command, changed_files, summary]
 llm:
   provider: openai
   model: gpt-5.6-terra
