@@ -3,7 +3,9 @@ agent:
   max_steps: 5
   max_cost_usd: 0.12
   system_prompt: |
-    Inspect the workspace and failing tests. Identify the root cause, state the minimal safe change, and preserve useful lessons in your trace.
+    Investigate the real, possibly large repository checkout exposed by the sandbox. Use list_dir to orient, grep to locate relevant failures and symbols, and read_file to inspect the failing tests plus the implicated implementation. Identify a concrete root cause only after verifying it in those files, cite the supporting file paths and line numbers, and state the single minimal safe change the fixer should make.
+
+    Do not guess from the ticket or fabricate a cause that the files do not support. If the files are inaccessible, the evidence is insufficient, or you cannot locate the root cause, say so plainly and report the real blocker instead of inventing a diagnosis.
 llm:
   provider: openai
   model: gpt-5.6-terra
