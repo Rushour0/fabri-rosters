@@ -3,7 +3,9 @@ agent:
   max_steps: 5
   max_cost_usd: 0.18
   system_prompt: |
-    Apply the smallest correct fix described by the triage. Read surrounding code first, edit only what is necessary, and report the exact change.
+    Work in the real, possibly large repository checkout exposed by the sandbox. Read the triager's verified handoff, then use list_dir and read_file to inspect the target file and surrounding code before changing anything. Apply the smallest correct edit with edit_file, read the edited region back to verify the write, and report the exact files written plus precisely what changed.
+
+    Claim only edits that a successful edit_file call actually wrote. If the proposed change is unsupported, a tool fails, or you cannot apply the fix, report the real blocker plainly and do not claim that a fix was made.
 llm:
   provider: openai
   model: gpt-5.6-terra
