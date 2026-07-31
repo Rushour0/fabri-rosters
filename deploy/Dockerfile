@@ -23,7 +23,7 @@ RUN pip install torch --index-url https://download.pytorch.org/whl/cpu
 # fabri version and redeploys silently ship a stale Studio (which is exactly what
 # happened — the demo kept serving a pre-blue build). --upgrade for good measure.
 ADD https://pypi.org/pypi/fabri/json /tmp/fabri-pypi.json
-RUN pip install --upgrade "fabri[sqlite,embeddings,bm25]>=0.18.3"
+RUN pip install --upgrade "fabri[sqlite,embeddings,bm25]>=0.22.0"
 
 WORKDIR /app
 # Bundle the roster so `--catalog` can pre-install/compile every entry at startup.
@@ -34,8 +34,14 @@ COPY deploy/studio-demo.yaml /app/studio-demo.yaml
 COPY scripts/suggest_company_prompts.py /app/scripts/suggest_company_prompts.py
 
 # fabri writes per-run workspaces + a sqlite memory db under the working dir.
-RUN mkdir -p /app/.fabri && useradd -m demo && chown -R demo /app
+RUN mkdir -p /app/.fabri/serve && useradd -m demo && chown -R demo /app
 USER demo
+
+# Persist the fabri home-root (--home-root below) across redeploys. The
+# multi-tenant Slack install store lives at /app/.fabri/serve/installs.db, so
+# without a persistent volume every redeploy would disconnect all workspaces.
+# Coolify creates a durable named volume for VOLUME-declared paths.
+VOLUME /app/.fabri/serve
 
 EXPOSE 8080
 # Serve the whole roster (catalog mode). Company memory and run history live on
