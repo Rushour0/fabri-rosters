@@ -23,7 +23,7 @@ RUN pip install torch --index-url https://download.pytorch.org/whl/cpu
 # fabri version and redeploys silently ship a stale Studio (which is exactly what
 # happened — the demo kept serving a pre-blue build). --upgrade for good measure.
 ADD https://pypi.org/pypi/fabri/json /tmp/fabri-pypi.json
-RUN pip install --upgrade "fabri[sqlite,embeddings,bm25]>=0.22.0"
+RUN pip install --upgrade "fabri[sqlite,embeddings,bm25]>=0.23.0"
 
 WORKDIR /app
 # Bundle the roster so `--catalog` can pre-install/compile every entry at startup.
