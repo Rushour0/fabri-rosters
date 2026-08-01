@@ -7,7 +7,13 @@ memory_namespace = "playable_ad_studio"
 # A manager waits for its whole subtree; the CEO->director->crew->specialist
 # chain needs far more than the 120s single-agent default. Injected into every
 # manager child-call at compile time.
-call_timeout_s = 1200
+#
+# 2400, not 1200: a full prod run measured ~1091s against the old 1200s ceiling,
+# leaving ~9% margin — so a normal-length build was a coin flip, and with the
+# single-agent fallback off (v0.18.52) losing that flip returns nothing at all.
+# This is a stopgap that buys headroom, not a fix: the real problem is that one
+# short game takes ~18 minutes. That needs less company work or a bigger box.
+call_timeout_s = 2400
 
 [[node]]
 id = "ceo"
