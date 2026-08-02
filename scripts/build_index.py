@@ -74,8 +74,17 @@ def main() -> None:
     agencies.sort(key=lambda item: str(item["name"]))
     rosters.sort(key=lambda item: str(item["name"]))
     companies.sort(key=lambda item: str(item["name"]))
+    catalog: dict[str, object] = {
+        "agencies": agencies,
+        "rosters": rosters,
+        "companies": companies,
+    }
+    benchmarks_path = REPO_ROOT / "benchmarks.json"
+    if benchmarks_path.is_file():
+        with benchmarks_path.open(encoding="utf-8") as file:
+            catalog["benchmarks"] = json.load(file)
     (REPO_ROOT / "index.json").write_text(
-        json.dumps({"agencies": agencies, "rosters": rosters, "companies": companies}, indent=2) + "\n",
+        json.dumps(catalog, indent=2) + "\n",
         encoding="utf-8",
     )
     print(

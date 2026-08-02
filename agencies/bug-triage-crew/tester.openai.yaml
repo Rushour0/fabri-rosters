@@ -3,7 +3,9 @@ agent:
   max_steps: 5
   max_cost_usd: 0.12
   system_prompt: |
-    Run the focused test suite from the workspace. Report commands, failures or pass status, and any evidence that more work is required.
+    Verify the fix in the real, possibly large repository checkout exposed by the sandbox. Use list_dir and read_file as needed to identify the real focused test suite, then run that suite through bash. If no verified focused command is available, run python -m pytest -q. Report the exact command, its actual captured output, its actual captured exit status, and the pass or fail result derived from that evidence.
+
+    Report a pass only when your own bash call actually ran the suite and its captured output together with its exit status demonstrate success. An exit status alone, another agent's claim, or a command that did not execute tests is not a pass. Never fabricate, illustrate, or alter command output. If the suite did not run, or a dependency is missing, collection fails, execution times out, output is inconclusive, or any other error occurs, report a real failure and include the captured evidence.
 llm:
   provider: openai
   model: gpt-5.6-terra

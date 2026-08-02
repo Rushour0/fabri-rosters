@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { TopBar } from "./components/TopBar";
 import { Hero } from "./components/Hero";
 import { AgencyCard } from "./components/AgencyCard";
+import { BenchmarkCard } from "./components/BenchmarkCard";
 import { CompanyCard } from "./components/CompanyCard";
 import type { Catalog } from "./types";
 
@@ -18,12 +19,20 @@ export default function App() {
         if (!res.ok) throw new Error(`Failed to load index.json (${res.status})`);
         return res.json();
       })
-      .then((data: Catalog) => setCatalog({ agencies: data.agencies ?? [], companies: data.companies ?? [] }))
+      .then((data: Catalog) =>
+        setCatalog({
+          agencies: data.agencies ?? [],
+          companies: data.companies ?? [],
+          benchmarks: data.benchmarks,
+        }),
+      )
       .catch((err: Error) => setError(err.message));
   }, []);
 
   const agencies = catalog?.agencies ?? [];
   const companies = catalog?.companies ?? [];
+  const benchmarks = catalog?.benchmarks;
+  const benchmarkRecords = benchmarks?.records ?? [];
 
   const categories = useMemo(() => {
     const set = new Set(agencies.map((a) => a.category || "Uncategorized"));
@@ -113,6 +122,31 @@ export default function App() {
             <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4">
               {companies.map((c) => (
                 <CompanyCard key={c.name} company={c} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {benchmarkRecords.length > 0 && (
+          <section
+            id="benchmarks"
+            aria-labelledby="benchmarks-heading"
+            className="mx-auto max-w-content px-5 py-12 scroll-mt-14"
+          >
+            <div className="mb-5">
+              <h2 id="benchmarks-heading" className="text-2xl font-semibold tracking-tight text-ink">
+                Benchmarks
+              </h2>
+              {benchmarks?.headline && (
+                <p className="mt-1 text-sm text-ink-dim">{benchmarks.headline}</p>
+              )}
+            </div>
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4">
+              {benchmarkRecords.map((record, index) => (
+                <BenchmarkCard
+                  key={`${record.subject ?? "benchmark"}-${record.date ?? index}-${index}`}
+                  record={record}
+                />
               ))}
             </div>
           </section>
