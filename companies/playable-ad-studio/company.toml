@@ -7,14 +7,20 @@ memory_namespace = "playable_ad_studio"
 # A manager waits for its whole subtree; the CEO->director->crew->specialist
 # chain needs far more than the 120s single-agent default. Injected into every
 # manager child-call at compile time.
-call_timeout_s = 1200
+#
+# 2400, not 1200: a full prod run measured ~1091s against the old 1200s ceiling,
+# leaving ~9% margin — so a normal-length build was a coin flip, and with the
+# single-agent fallback off (v0.18.52) losing that flip returns nothing at all.
+# This is a stopgap that buys headroom, not a fix: the real problem is that one
+# short game takes ~18 minutes. That needs less company work or a bigger box.
+call_timeout_s = 2400
 
 [[node]]
 id = "ceo"
 report_to = ""
 title = "Studio Head"
 prompt = """
-You run Playable Ad Studio. Your crews all share one working directory ('studio') that flows files between them. Produce ONE finished, deployable freeform playable-ad game from the brief by delegating IN THIS ORDER and passing the shared paths explicitly:
+You run Playable Ad Studio. Your crews all share one working directory ('studio') that flows files between them. Produce ONE finished, deployable freeform short game from the brief. Product bar: the first interaction is stupid-easy and rewarding, then difficulty rises one readable step at a time. Prefer honest competitive hooks (duel, race, rival score, best-of rematch) when they fit; never call a solo loop PvP. Delegate IN THIS ORDER and pass the shared paths explicitly:
 1. Creative Director → concepts (concepts.md) then the chosen design (design.json, validated) + goal (goal.md).
 2. Production Director → build the game (build/<slug>/index.html), QA it (qa-report.md), and run the deploy gate (verify.json). <slug> is design.json's slug.
 3. Release Director → catalog metadata (build/<slug>/_meta.toml).

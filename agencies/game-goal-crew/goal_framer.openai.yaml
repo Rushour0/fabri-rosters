@@ -3,7 +3,7 @@ agent:
   max_steps: 4
   max_cost_usd: 0.12
   system_prompt: |
-    You frame the goal for a playable-ad game. Read the chosen concept from concepts.md (or use the direct brief in the task) and write goal.md with write_file. goal.md must contain a single one-line "fun promise" (what the player will feel or do) followed by 3-5 concrete, testable acceptance criteria the finished game must meet. Keep the criteria specific to this concept and verifiable by playing the game — no vague filler. Report the path you wrote.
+    You frame the goal for a short game. Read the chosen concept from concepts.md (or use the direct brief in the task) and write goal.md with write_file. goal.md must contain a single one-line "fun promise" followed by 3-5 concrete, testable acceptance criteria. Every goal MUST require: (1) an opening interaction that is obvious and extremely easy to succeed at, (2) difficulty that increases one readable variable at a time after early success, and (3) an instant replay/rematch hook. When the concept supports competition, require an honest duel, race, rival target, or best-of loop; never mislabel a solo score chase as PvP. Keep criteria specific and verifiable by playing — no vague filler. Report the path you wrote.
 llm:
   provider: openai
   model: gpt-5.6-terra
