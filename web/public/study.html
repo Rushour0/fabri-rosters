@@ -130,14 +130,74 @@ td strong { font-weight: 700; }
 .topbar { display: none; }
 @media (max-width: 900px) {
   .layout { display: block; }
-  .sidebar { position: static; width: auto; height: auto; border-right: none;
-    border-bottom: 1px solid var(--line); padding: 18px 16px; }
+
+  /* sticky chapter bar replaces the desktop sidebar rail */
+  .topbar { display: flex; align-items: center; gap: 12px; position: sticky; top: 0;
+    z-index: 20; background: var(--sidebar-bg); border-bottom: 1px solid var(--line);
+    padding: 10px 14px; font-family: var(--sans);
+    padding-left: max(14px, env(safe-area-inset-left));
+    padding-right: max(14px, env(safe-area-inset-right)); }
+  .topbar-title { flex: 1; min-width: 0; font-size: 14px; font-weight: 600;
+    line-height: 1.25; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .topbar-title b { color: var(--accent-ink); }
+  .topbar-title span { display: block; font-family: var(--mono); font-size: 10.5px;
+    font-weight: 400; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-faint); }
+  .topbar-toggle { -webkit-appearance: none; appearance: none; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 7px; min-height: 40px;
+    padding: 0 14px; border: 1px solid var(--line); border-radius: 10px;
+    background: var(--surface); color: var(--ink); font: inherit; font-size: 13.5px;
+    font-weight: 600; }
+  .topbar-toggle::after { content: "▾"; font-size: 11px; color: var(--ink-faint); }
+  .topbar-toggle[aria-expanded="true"] { border-color: var(--accent-ink);
+    color: var(--accent-ink); }
+  .topbar-toggle[aria-expanded="true"]::after { content: "▴"; }
+
+  .sidebar { position: sticky; top: 57px; z-index: 19; width: auto; height: auto;
+    max-height: calc(100dvh - 57px); border-right: none;
+    border-bottom: 1px solid var(--line); padding: 12px 14px 20px;
+    padding-left: max(14px, env(safe-area-inset-left));
+    padding-right: max(14px, env(safe-area-inset-right)); }
+  .js .sidebar { display: none; }
+  .js .sidebar.open { display: block; }
+  .brand { display: none; }
   .subnav { display: none !important; }
-  .nav { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .nav { display: block; }
+  .nav-item { margin: 0; }
+  .nav-link { min-height: 46px; align-items: center; padding: 10px; }
   .nav-blurb { display: none; }
-  article { padding: 34px 20px 60px; }
-  .pager { min-width: 0; flex: 1; }
+
+  article { padding: 30px 18px 64px;
+    padding-left: max(18px, env(safe-area-inset-left));
+    padding-right: max(18px, env(safe-area-inset-right)); }
+  .chapter-head h1 { font-size: 27px; }
+  .chapter-blurb { font-size: 15.5px; }
+  article h2 { font-size: 20px; }
+  article h3 { font-size: 16.5px; }
+  .pagernav { flex-direction: column; gap: 10px; margin-top: 44px; }
+  .pager { min-width: 0; }
+  .pager.next { text-align: left; }
+  .pager.spacer { display: none; }
+  /* the sticky topbar must not cover a deep-linked heading */
+  article [id] { scroll-margin-top: 66px; }
 }
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  article { padding: 24px 15px 56px; }
+  .chapter-head h1 { font-size: 24px; }
+  pre { padding: 12px 13px; border-radius: 8px; margin-left: -3px; margin-right: -3px; }
+  pre code { font-size: 12.5px; }
+  table { font-size: 12.5px; }
+  th, td { padding: 8px 11px; }
+  blockquote { padding: .2em .9em; }
+  ul, ol { padding-left: 1.25em; }
+}
+/* long identifiers and URLs must never widen the page */
+html { -webkit-text-size-adjust: 100%; }
+body { overflow-wrap: break-word; }
+code { overflow-wrap: anywhere; }
+pre code { overflow-wrap: normal; }
+.table-wrap { -webkit-overflow-scrolling: touch; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
 </style>
@@ -2879,8 +2939,8 @@ alongside any company/agency change, or CI fails.</p>
 <hr>
 <h2 id="ecosystem--5-coolify-demo-hosting-fabri-rushour0-com">5. Coolify demo hosting — fabri.rushour0.com</h2>
 <p><strong>What it is.</strong> The public, interactive Studio demo at <code>fabri.rushour0.com</code> (running <code>fabri studio
---catalog</code>) is hosted by <strong>Coolify on the user's own AWS EC2 box</strong> (ap-south-1, instance
-<code>REDACTED</code>, Coolify itself reachable at <code>coolify.rushour0.com</code>). Coolify builds
+--catalog</code>) is hosted by <strong>Coolify on the user's own AWS EC2 box</strong> (ap-south-1, a single
+long-lived instance; Coolify itself reachable at <code>coolify.rushour0.com</code>). Coolify builds
 <code>deploy/Dockerfile</code> out of the <strong>fabri-rosters</strong> repo — not the fabri engine repo — which is worth
 remembering because it's an easy thing to misremember (the user did, once, in-session).</p>
 <p><strong>Deploy mechanism.</strong> Not Fly.io, not SSH-and-restart. A GitHub Action just <code>curl</code>s Coolify's
@@ -3245,11 +3305,40 @@ scattered through the notes above:</p>
   var navItems = Array.prototype.slice.call(document.querySelectorAll('.nav-item'));
   var slugs = articles.map(function (a) { return a.id; });
 
+  // Mobile chapter drawer: the sidebar rail collapses behind a sticky "Chapters" button.
+  var sidebar = document.querySelector('.sidebar');
+  var topbar = document.createElement('div');
+  topbar.className = 'topbar';
+  topbar.innerHTML =
+    '<p class="topbar-title"><span>fabri study pack</span><b class="topbar-chapter"></b></p>' +
+    '<button class="topbar-toggle" type="button" aria-expanded="false" ' +
+    'aria-controls="study-nav">Chapters</button>';
+  sidebar.setAttribute('id', 'study-nav');
+  sidebar.parentNode.insertBefore(topbar, sidebar);
+  document.documentElement.classList.add('js');
+
+  var toggle = topbar.querySelector('.topbar-toggle');
+  var chapterLabel = topbar.querySelector('.topbar-chapter');
+
+  function setDrawer(open) {
+    sidebar.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  toggle.addEventListener('click', function () {
+    setDrawer(sidebar.classList.contains('open') === false);
+  });
+  sidebar.addEventListener('click', function (e) {
+    if (e.target.closest('a')) { setDrawer(false); }
+  });
+
   function show(slug, scrollTarget) {
     articles.forEach(function (a) { a.hidden = a.id !== slug; });
     navItems.forEach(function (n) {
       n.classList.toggle('active', n.getAttribute('data-doc') === slug);
     });
+    var title = document.getElementById(slug).getAttribute('data-title') || slug;
+    chapterLabel.textContent = title;
+    setDrawer(false);
     document.title = 'fabri — study pack · ' +
       (document.getElementById(slug).getAttribute('data-title') || slug);
     if (scrollTarget) {
