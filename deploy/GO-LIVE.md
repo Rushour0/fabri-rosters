@@ -69,6 +69,29 @@ I can run most of this if you hand me the credentials in this session:
 
 I can't do any of these without you providing them — they're your cloud, your key, and your domain.
 
+## Running agencies from Slack, GitHub, and Linear
+
+The demo can also accept work from a connected workspace (see the grammar in the
+README). Each surface turns on by being configured — an unconfigured surface has
+no route at all, rather than a half-working endpoint.
+
+| Surface | Container env | Webhook to point at it |
+|---|---|---|
+| Slack | `FABRI_SLACK_EVENTS=1`, `SLACK_SIGNING_SECRET`, `SLACK_CLIENT_ID`, `SLACK_CLIENT_SECRET` | `/slack/events` |
+| GitHub | `GITHUB_APP_WEBHOOK_SECRET`, `GITHUB_APP_SLUG`, `FABRI_CRED_GITHUB_APP_ID`, `FABRI_CRED_GITHUB_PRIVATE_KEY` | `/github/webhook` (subscribe the App to `issue_comment`) |
+| Linear | `LINEAR_WEBHOOK_SECRET`, `LINEAR_CLIENT_ID`, `LINEAR_CLIENT_SECRET` | `/linear/webhook` |
+
+Set `FABRI_SLACK_STUDIO_URL=https://fabri.rushour0.com` so Slack results link
+back to the run.
+
+**Limits.** Runs started from a workspace are capped before they launch, and the
+defaults are deliberately tight for a public demo: one concurrent run per
+workspace, 10 runs and $2 per workspace per day, $10/day across the server, and
+$0.75 per run. Raise them per deployment with `FABRI_SURFACE_MAX_CONCURRENT`,
+`FABRI_SURFACE_MAX_RUNS_PER_DAY`, `FABRI_SURFACE_MAX_USD_PER_DAY`,
+`FABRI_SURFACE_GLOBAL_USD_PER_DAY`, and `FABRI_SURFACE_MAX_COST_PER_RUN`. These
+sit under the provider key's own hard cap, not instead of it.
+
 ## Updating later
 
 ```bash

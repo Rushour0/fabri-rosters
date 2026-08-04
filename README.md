@@ -25,6 +25,28 @@ agencies keep their own specialized collections.
 - `scripts/` — catalog build and validation tools
 - `templates/` — copy-me starting points
 
+## Run an agency from Slack, GitHub, or Linear
+
+Every entry in this catalog can be run from a connected workspace, not only from
+Studio. Connect the workspace in Studio's **Settings** tab, then:
+
+| Where | What you type | What comes back |
+|---|---|---|
+| Slack | `@fabri run <name> <task>` | the result in-thread, with its cost |
+| Slack | `@fabri list` | the entries you can run |
+| GitHub | `/fabri run <name> <task>` in an issue or PR comment | a comment on the same thread |
+| Linear | label an issue `fabri:<name>` | a comment on the issue |
+
+`<name>` is the entry's `name` in `index.json` — for example
+`competitor-teardown-crew` or `escalation-brief-crew`. On Linear the issue
+itself is the task, so no extra text is needed.
+
+Runs started this way are capped: one at a time per workspace, a daily run and
+spend limit per workspace, and a per-run ceiling that is the lower of the entry's
+own `max_cost_usd` and the surface cap. An agent started from a webhook cannot
+stop to ask a human a question, because there is nowhere to ask — in Slack it
+can, and it will ask in the thread.
+
 ## Add an agency
 
 Add a directory under `agencies/` containing `agency.toml`, an `agent.openai.yaml` entrypoint, specialist configurations, and a `workspace/`. Then regenerate and check the catalog:
