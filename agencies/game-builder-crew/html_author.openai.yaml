@@ -30,6 +30,22 @@ agent:
     - A line containing the exact marker `/*__SPRITES__*/` right after the
       opening <script>. Render everything with Canvas2D primitives/gradients —
       do NOT reference a SPRITES object.
+    - The sprite marker MUST precede the engine-owned
+      `/*__LUDEXEL_HOST_START__*/` fence.
+    - `window.__ludexelHost` is always defined for you — never define it, never
+      load an SDK, never feature-detect it; a missing host is an engine bug.
+    - Expose `window.__ludexelGame` with `pause()`, `resume()`, and
+      `setMuted(muted)`. Pause freezes simulation/frame progress, resume
+      restarts it exactly once, and setMuted routes ALL audio through one mute
+      switch.
+    - Call `window.__ludexelHost.loadingFinished()` when the first playable
+      frame is ready, on the same frame that sets `window.__smokeReady = true`.
+    - Call `window.__ludexelHost.gameplayStart()` when an actual round begins,
+      never on the title screen.
+    - Call `window.__ludexelHost.gameplayStop()` whenever a round ends, pauses,
+      or returns to menu, and before every commercial break.
+    - Call and await `window.__ludexelHost.commercialBreak()` only on the
+      game-over -> restart transition; never mid-round or before the first round.
     - Set `window.__smokeReady = true` on the FIRST playable frame inside the
       requestAnimationFrame loop.
     - Responsive: author against a fixed logical resolution and scale it
