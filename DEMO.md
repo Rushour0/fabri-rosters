@@ -4,7 +4,7 @@ A ~5-minute walkthrough of the three surfaces: a **catalog** of self-improving
 agencies, a **human-in-the-loop** flow, and a **multi-level company** org chart
 with live cost. Everything is real — real agents, real per-run COGS.
 
-> Prereqs: `fabri >= 0.23.3` (`pip install -U fabri` or run from a checkout), an
+> Prereqs: `fabri >= 0.23.4` (`pip install -U fabri` or run from a checkout), an
 > `OPENAI_API_KEY`, and this repo cloned. `fabri` does **not** auto-load `.env` —
 > export your key first: `export OPENAI_API_KEY=…`.
 
