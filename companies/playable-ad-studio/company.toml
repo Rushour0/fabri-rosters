@@ -73,10 +73,16 @@ agency = "../../agencies/deployable-html-verify-crew"
 id = "release_director"
 report_to = "ceo"
 title = "Release Director"
-prompt = "Own catalog readiness. Once the game passes the deploy gate, call the Game Meta Crew to write build/<slug>/_meta.toml (engines/web freeform catalog format) and a store blurb. Report the metadata path."
+prompt = "Own catalog readiness AND portal admissibility. Once the game passes the deploy gate, call the CrazyGames Quality Crew to audit it against the published platform guidelines (crazygames-audit.md), then call the Game Meta Crew to write build/<slug>/_meta.toml (engines/web freeform catalog format) and a store blurb. Report the metadata path AND the audit verdict. A BLOCK verdict is not a release blocker for the catalog, but it MUST be reported — a game that would be rejected by a portal is a game the studio should know about before a human spends a submission on it."
 
 [[node]]
 id = "game_meta_crew"
 report_to = "release_director"
 title = "Game Meta Crew"
 agency = "../../agencies/game-meta-crew"
+
+[[node]]
+id = "crazygames_quality_crew"
+report_to = "release_director"
+title = "CrazyGames Quality Crew"
+agency = "../../agencies/crazygames-quality-crew"

@@ -37,6 +37,7 @@
       "category": "Engineering & Product",
       "deliverable": "A passing test suite on the target module",
       "entry": "agent.openai.yaml",
+      "test_cmd": "python -m pytest -q",
       "agents": 4,
       "tools": 4,
       "max_cost_usd": 0.5,
@@ -74,6 +75,21 @@
       "self_improving": true,
       "cogs_reported": true,
       "path": "agencies/competitor-teardown-crew"
+    },
+    {
+      "name": "crazygames-quality-crew",
+      "title": "CrazyGames Quality Crew",
+      "tagline": "Audits a built HTML game against the published CrazyGames quality guidelines and returns a SHIP/BLOCK verdict before a human reviewer sees it.",
+      "category": "Engineering & Product",
+      "deliverable": "A crazygames-audit.md with a SHIP/BLOCK verdict, every finding quoted against the exact published criterion it violates, and the concrete fix.",
+      "entry": "agent.openai.yaml",
+      "agents": 5,
+      "tools": 3,
+      "max_cost_usd": 0.6,
+      "provider": "openai",
+      "self_improving": true,
+      "cogs_reported": true,
+      "path": "agencies/crazygames-quality-crew"
     },
     {
       "name": "data-analysis-crew",
@@ -450,15 +466,16 @@
       "positioning": "Turns a game brief into a validated, deployable freeform playable-ad HTML game for engines/web \u2014 idea to design to build to QA to deploy-gate to catalog metadata \u2014 at a known cost.",
       "max_cost_usd": 4.0,
       "memory_namespace": "playable_ad_studio",
-      "call_timeout_s": 1200,
-      "node_count": 10,
+      "call_timeout_s": 2400,
+      "node_count": 11,
       "member_agencies": [
         "game-idea-crew",
         "game-goal-crew",
         "game-builder-crew",
         "game-qa-crew",
         "deployable-html-verify-crew",
-        "game-meta-crew"
+        "game-meta-crew",
+        "crazygames-quality-crew"
       ],
       "path": "companies/playable-ad-studio"
     },

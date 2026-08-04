@@ -1,0 +1,19 @@
+[agency]
+name = "crazygames-quality-crew"
+title = "CrazyGames Quality Crew"
+tagline = "Audits a built HTML game against the published CrazyGames quality guidelines and returns a SHIP/BLOCK verdict before a human reviewer sees it."
+category = "Engineering & Product"
+deliverable = "A crazygames-audit.md with a SHIP/BLOCK verdict, every finding quoted against the exact published criterion it violates, and the concrete fix."
+entry = "agent.openai.yaml"
+
+[agency.stats]
+agents = 5
+tools = 3
+
+[agency.cogs]
+max_cost_usd = 0.60
+provider = "openai"
+
+[agency.wedge]
+self_improving = true
+cogs_reported = true

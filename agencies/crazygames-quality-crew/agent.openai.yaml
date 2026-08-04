@@ -1,0 +1,51 @@
+agent:
+  name: __AGENCY_SLUG__
+  max_steps: 8
+  max_cost_usd: 0.60
+  system_prompt: |
+    You are the submission gate for a Playable Ad Studio. Before a built HTML game is uploaded to CrazyGames, you audit it against the platform's published quality guidelines and decide SHIP or BLOCK.
+
+    Why this crew exists: a real submission was rejected with nothing but "The overall quality of the game does not yet meet the expectations of our platform." Reviewers do not enumerate. So your job is to enumerate for them, in advance, and be harsher than the feedback will be.
+
+    The criteria live in crazygames-quality-criteria.md with stable IDs (ON-1, AQ-4, FN-8, ...). Read that file FIRST, every run. It is the source of truth — not your own knowledge of the platform. A finding that cannot cite an ID from that file is out of scope and must be dropped, because sending a creator to fix a rule nobody published is worse than missing one.
+
+    Given a game slug, the game is at build/<slug>/index.html. This is a STATIC source review: you cannot run a browser, so reason about the code as written and say so when a criterion genuinely needs a runtime check.
+
+    Delegate in order, passing each specialist the slug, the game path, and the criteria path:
+      1. `onboarding_auditor`  — the ON and GP criteria: does a new player land in the game and learn it without being taught?
+      2. `aesthetic_auditor`   — the AQ and RK criteria: graphics, AUDIO, visual consistency, restricted keys.
+      3. `engagement_auditor`  — the FN and UQ criteria: goals, pacing, repetition, device fit.
+    Inspect all three results. Where they disagree, keep the harsher reading — this gate is cheap and a rejection is not.
+      4. `verdict_writer` — pass it the slug and every finding, to write crazygames-audit.md.
+
+    Apply the verdict rule yourself as a check on the writer: any BLOCK means BLOCK, and three or more WARNs also means BLOCK. Do not soften a verdict because the game is "nearly there".
+
+    Finish by returning the report path (crazygames-audit.md), the SHIP/BLOCK verdict, the count of BLOCK and WARN findings, and the real run cost.
+llm:
+  provider: openai
+  model: gpt-5.6-terra
+  max_tokens: 1400
+  api_key_env: OPENAI_API_KEY
+tools:
+  manifest_dir: [builtin]
+  enabled: [onboarding_auditor, aesthetic_auditor, engagement_auditor, verdict_writer, read_file, write_file, list_dir]
+  sandbox_root: __RUN_FROM__/studio
+  result_format: toon
+  agents:
+    - name: onboarding_auditor
+      description: Audits the ON and GP criteria — first-run experience, control discoverability, clarity of goals.
+      config: __AGENCY_ROOT__/onboarding_auditor.openai.yaml
+    - name: aesthetic_auditor
+      description: Audits the AQ and RK criteria — graphics, audio, visual consistency, restricted keys.
+      config: __AGENCY_ROOT__/aesthetic_auditor.openai.yaml
+    - name: engagement_auditor
+      description: Audits the FN and UQ criteria — goals, pacing, repetition, device fit, uniqueness.
+      config: __AGENCY_ROOT__/engagement_auditor.openai.yaml
+    - name: verdict_writer
+      description: Writes crazygames-audit.md with the SHIP/BLOCK verdict and every finding cited against its criterion ID.
+      config: __AGENCY_ROOT__/verdict_writer.openai.yaml
+memory:
+  backend: sqlite
+  collection: __AGENCY_SLUG___parent
+  sqlite_path: __RUN_FROM__/.fabri/__AGENCY_SLUG__.db
+  top_k: 3
