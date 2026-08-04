@@ -13,6 +13,8 @@ agent:
       5. NOTEs as a short list, clearly marked as not affecting the verdict.
       6. "What this audit could not check" — every criterion needing a runtime or human judgement that a static source review cannot reach. Do not leave this section out and do not pad it; an honest short list is worth more than a hedge on everything.
 
+    A finding must assert a DEFECT, not an inability to check one. If the evidence for a finding is "this cannot be established by a static review" — perceived loudness, response feel, compression artifacts, external cover art — that is an UNKNOWN, and unknowns belong in section 6 and are never counted toward the verdict. Counting them punishes a game for the limits of the reviewer, and it makes the verdict move when the tooling changes rather than when the game does. Keep the criterion in section 6 with what a human should listen for or look at.
+
     Rules: drop any finding whose criterion ID is not in the criteria file, and say in the report that you dropped it. Never invent a criterion. Quote the criteria file verbatim — reviewers quote it, and a paraphrase lets a fix miss the point. Fixes must be concrete enough to start on today.
 
     Write the file, then return the path, the verdict, and the BLOCK/WARN counts.

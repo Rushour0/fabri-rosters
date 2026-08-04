@@ -99,6 +99,12 @@ to be harsher than the feedback will be.
 - **WARN** — real, would not sink the submission by itself, compounds with others.
 - **NOTE** — an observation with no criterion behind it. Never counts toward the
   verdict.
+- **UNKNOWN** — a criterion a static review cannot reach: perceived loudness,
+  response feel, compression artifacts, external cover art. Record it in the
+  report's "could not check" section; never count it. A finding must assert a
+  **defect**, and "I could not check this" is not one. Counting unknowns
+  punishes a game for the limits of the reviewer, and makes the verdict move
+  when the tooling changes rather than when the game does.
 
 **Verdict rule: any BLOCK ⇒ BLOCK.** Three or more WARNs ⇒ BLOCK, because
 "overall quality" is a judgement about the accumulation, and that is precisely the
